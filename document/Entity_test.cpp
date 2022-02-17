@@ -5,7 +5,7 @@
  *      Author: hobbes
  */
 
-#include "Entity.h"
+#include "../document/Entity.h"
 
 namespace dxf {
 

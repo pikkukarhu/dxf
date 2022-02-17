@@ -6,13 +6,15 @@
  */
 #pragma once
 
-#ifndef ENTITIES_TYPES_LINE_H_
-#define ENTITIES_TYPES_LINE_H_
+#ifndef ENTITIES_LINE_H_
+#define ENTITIES_LINE_H_
 
 #include <vector>
 #include <string>
 
-#include "../Entity.h"
+#include "document/Entity.h"
+#include "file/File.h"
+
 #include "Point.h"
 
 using std::vector;
@@ -22,17 +24,17 @@ namespace dxf {
 
 class Line final : public Entity {
 private:
-	Point start_;
-	Point end_;
+	Point_ start_;
+	Point_ end_;
 
 public:
-	Line(const vector<string> &properties);
+	Line(const vector<Group> &properties);
 	virtual ~Line() {};
 };
 
 
-inline Line* createLine(const vector<string> &properties) { return new Line(properties); }
+inline Line* createLine(const vector<Group> &properties) { return new Line(properties); }
 
 } /* namespace dxf */
 
-#endif /* ENTITIES_TYPES_LINE_H_ */
+#endif /* ENTITIES_LINE_H_ */

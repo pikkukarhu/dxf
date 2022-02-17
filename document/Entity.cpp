@@ -9,7 +9,7 @@
 
 namespace dxf {
 
-Entity::Entity() {
+Entity::Entity(const vector<Group> &properties) {
 	// TODO Auto-generated constructor stub
 
 }

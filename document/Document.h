@@ -1,7 +1,7 @@
 /*
- * Document.h
+ * Entities.h
  *
- *  Created on: 13 Feb 2022
+ *  Created on: 17 Feb 2022
  *      Author: hobbes
  */
 
@@ -11,37 +11,24 @@
 #define DOCUMENT_DOCUMENT_H_
 
 #include <vector>
-#include <fstream>
+#include <string>
 
-#include "../entities/Entity.h"
-#include "../entities/Block.h"
-#include "../header/Variable.h"
+#include "../document/Entity.h"
 
 using std::vector;
+using std::string;
 
 namespace dxf {
 
-class Document final {
+class Entities final {
 private:
-	string file_;
-
-	vector <Entity> entityes_;
-	vector <Block>  blocks_;
-	vector <Variable> variables_;
-
-	typedef struct {
-		int groupcode;
-		string value;
-	} Group_;
-
-	std::istream& readGroup(std::istream& is, Group_& g);
+	vector<Entity* > entities_;
 
 public:
-	inline Document(string fileName) {this->file_ = fileName; }
-	virtual ~Document() {}
+	Entities() {}
+	virtual ~Entities();
 
-	int readFile();
-
+	void createEntity(const vector<string>& props);
 };
 
 } /* namespace dxf */

@@ -5,7 +5,7 @@
  *      Author: hobbes
  */
 
-#include "Block.h"
+#include "../document/Block.h"
 
 namespace dxf {
 

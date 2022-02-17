@@ -9,13 +9,14 @@
 
 namespace dxf {
 
-Line::Line() {
+Line::Line(const vector<Group> &properties) :Entity(properties) {
 	// TODO Auto-generated constructor stub
-
+	// Read end & start from groups. (Other line spacific) Entity should read directly
 }
 
 Line::~Line() {
 	// TODO Auto-generated destructor stub
+	// Probably nothing
 }
 
 } /* namespace dxf */
