@@ -27,13 +27,15 @@ private:
 	Point_ start_;
 	Point_ end_;
 
+	double thicness_ = 0.0;
+	Point_ extrDir_ = {0.0, 0.0, 1.0};
+
 public:
 	Line(const vector<Group> &properties);
 	virtual ~Line() {};
 };
 
 
-inline Line* createLine(const vector<Group> &properties) { return new Line(properties); }
 
 } /* namespace dxf */
 

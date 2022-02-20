@@ -5,7 +5,7 @@
  *      Author: hobbes
  */
 
-#include "../Line.h"
+#include "Line.h"
 
 namespace dxf {
 

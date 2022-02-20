@@ -12,8 +12,9 @@ namespace dxf {
 
 Entities::~Entities() {
 
-	for(auto e = std::begin(entities_); e != std::end(entities_); ++e) {
-	   delete e;
+	for (int i = 0; i < entities_.size(); ++i) {
+		Entity* e = entities_[i];
+		delete e;
 	}
 }
 

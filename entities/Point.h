@@ -30,6 +30,7 @@ public:
 	virtual ~Point() {};
 };
 
+
 } /* namespace dxf */
 
 #endif /* ENTITIES_POINT_H_ */

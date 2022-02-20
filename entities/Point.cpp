@@ -26,8 +26,4 @@ Point::Point(const vector<Group> &properties) :Entity(properties) {
 
 }
 
-Point::~Point() {
-	// TODO Auto-generated destructor stub
-}
-
 } /* namespace dxf */

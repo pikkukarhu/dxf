@@ -25,7 +25,7 @@ int main(int argc, char** argv) {
 	if (argc < 2) {
 		cerr << "Usage: dxfile file_name" << endl;
 	}
-	dxf::Document d(argv[1]);
+	dxf::File d(argv[1]);
 	d.readFile();
 }
 
@@ -62,7 +62,7 @@ std::istream& safeGetline(std::istream& is, std::string& t)     {
 
 
 
-std::istream& Document::readGroup(std::istream& is, Group& g) {
+std::istream& File::readGroup(std::istream& is, Group& g) {
 
 	string s;
 	if (! safeGetline(is, s) || s == "") {
@@ -86,7 +86,7 @@ std::istream& Document::readGroup(std::istream& is, Group& g) {
 /*
  * Read all lines of document
  */
-int Document::readFile() {
+int File::readFile() {
     ifstream fs(this->file_);
     string l;
 

@@ -12,36 +12,30 @@
 
 #include <vector>
 #include <fstream>
-
-#include "../document/Block.h"
-#include "../document/Entity.h"
-#include "../header/Variable.h"
+#include <string>
 
 using std::vector;
+using std::string;
 
 namespace dxf {
 
-struct Group {
+class Group {
+public:
 	int groupcode;
 	string value;
 };
 
-class Document final {
+class File final {
 private:
 	string file_;
-
-	vector <Entity> entityes_;
-	vector <Block>  blocks_;
-	vector <Variable> variables_;
 
 	std::istream& readGroup(std::istream& is, Group& g);
 
 public:
-	inline Document(string fileName) {this->file_ = fileName; }
-	virtual ~Document() {}
+	inline File(string fileName) {this->file_ = fileName; }
+	virtual ~File() {}
 
 	int readFile();
-
 };
 
 } /* namespace dxf */

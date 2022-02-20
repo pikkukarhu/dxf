@@ -5,7 +5,7 @@
  *      Author: hobbes
  */
 
-#include "../Point.h"
+#include "Point.h"
 
 namespace dxf {
 
