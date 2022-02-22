@@ -145,6 +145,15 @@ Entity::~Entity() {
 	// TODO Auto-generated destructor stub
 }
 
+
+string Entity::toString() {
+	return this->type_ + ": {"
+			+ "\"subclassMarker\" : " + this->subclassMarker_
+//			+ "\"modelSpace\" : " + this->modelSpace_
+			+ "\"layer\" : " + this->layer_
+			+ "\"lineType_\" : " + this->lineType_+ "}";
+}
+
 /*
 Entity::Entity(const Entity &other) {
 	// TODO Auto-generated constructor stub

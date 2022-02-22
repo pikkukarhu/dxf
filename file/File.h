@@ -27,14 +27,16 @@ public:
 
 class File final {
 private:
-	string file_;
-
-	std::istream& readGroup(std::istream& is, Group& g);
+	std::ifstream* is_;
 
 public:
-	inline File(string fileName) {this->file_ = fileName; }
-	virtual ~File() {}
+	File(string fileName);
+	virtual ~File();
 
+	std::istream& readGroup(std::istream& is, Group& g);
+	bool readGroup(Group& g);
+
+	// TODO test,remove later, document reads file.
 	int readFile();
 };
 

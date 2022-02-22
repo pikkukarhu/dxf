@@ -24,10 +24,16 @@ class Point final : public Entity {
 private:
 	Point_ pt_;
 
+	double thicness_ = 0.0;
+	Point_ extrDir_ = {0.0, 0.0, 1.0};
+
 public:
 	Point(const vector<Group> &properties);
-
 	virtual ~Point() {};
+
+	inline double x() { return this->pt_.x_; }
+	inline double y() { return this->pt_.y_; }
+	inline double z() { return this->pt_.z_; }
 };
 
 

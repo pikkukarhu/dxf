@@ -23,10 +23,8 @@ namespace dxf {
 class EntityFactory final {
 private:
 
-	map<string, Entity* (*)(const vector<Group> &)> factories_; /*= {
-		{"LINE", createLine},
-		{"POINT", createPoint}
-	};*/
+	map<string, Entity* (*)(const vector<Group> &)> factories_;
+
 public:
 
 	EntityFactory();

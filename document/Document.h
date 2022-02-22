@@ -14,21 +14,23 @@
 #include <string>
 
 #include "Entity.h"
+#include "file/File.h"
 
 using std::vector;
 using std::string;
 
 namespace dxf {
 
-class Entities final {
+class Document final {
 private:
 	vector<Entity* > entities_;
+	void createEntity(const vector<string>& props);
 
 public:
-	Entities() {}
-	virtual ~Entities();
+	Document(string file);
+	virtual ~Document();
 
-	void createEntity(const vector<string>& props);
+
 };
 
 } /* namespace dxf */

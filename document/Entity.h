@@ -78,6 +78,8 @@ public:
 	inline bool		isVisible() { return this->visible_;}
 	inline RGB		getRgb() { return this->rgb_;}
 	inline int		getShadowMode() { return this->shadowMode_;}
+
+	virtual string toString();
 };
 
 } /* namespace dxf */

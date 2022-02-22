@@ -14,12 +14,13 @@
 #include <iostream>
 #include <sstream>
 
+
 using std::cout;
 using std::endl;
 using std::ifstream;
 using std::cerr;
 using std::vector;
-
+/*
 int main(int argc, char** argv) {
 
 	if (argc < 2) {
@@ -28,8 +29,23 @@ int main(int argc, char** argv) {
 	dxf::File d(argv[1]);
 	d.readFile();
 }
-
+*/
 namespace dxf {
+
+File::File(string fileName) {
+
+	this->is_ =  new ifstream(fileName);
+
+    if (!this->is_->is_open()) {
+    	// TODO create special exception class to enable advanced handling.
+    	throw string("Can not open file " + fileName);
+    }
+}
+
+File::~File() {
+	this->is_->close();
+	delete this->is_;
+}
 
 std::istream& safeGetline(std::istream& is, std::string& t)     {
     t.clear();
@@ -83,25 +99,41 @@ std::istream& File::readGroup(std::istream& is, Group& g) {
 	return is;
 }
 
+bool File::readGroup(Group& g) {
+	string s;
+	if (! safeGetline(*this->is_, s) || s == "") {
+		return false;
+	}
+	try {
+		g.groupcode = stoi(s);
+	}
+	catch (...) {
+		g.groupcode = -15;
+		cerr << "Error convert group code [" << s << "] to integer!" << endl;
+	}
+	safeGetline(*this->is_, g.value);
+	if (g.value == "EOF") {
+		this->is_->setstate(std::ios::eofbit);
+		return false;
+	}
+	return true;
+}
+
 /*
  * Read all lines of document
  */
 int File::readFile() {
-    ifstream fs(this->file_);
+
     string l;
 
-    // Check file exists
-    if (!fs.is_open()) {
-        return EXIT_FAILURE;
-    }
-    setlocale(6, "us_ascii");
+    // setlocale(6, "us_ascii");
 
     bool sectionStart = false;
     string section;
     vector<Group> entity;
 
     Group g;
-    while (readGroup(fs, g)) {
+    while (readGroup(*(this->is_), g)) {
 
     	// Start new section
     	if (g.groupcode == 0 && g.value == "SECTION") {
@@ -147,8 +179,6 @@ int File::readFile() {
 
     }
 	cout << g.groupcode << " : " << g.value << endl;
-
-    fs.close();
     return EXIT_SUCCESS;
 };
 
