@@ -15,6 +15,7 @@
 
 using std::vector;
 using std::string;
+using std::to_string;
 
 namespace dxf {
 
@@ -54,6 +55,22 @@ Point::Point(const vector<Group> &properties) :Entity(properties) {
 		}
 	}
 
+}
+
+string Point::toJson() {
+	string s;
+	s += "{\"point\" : {";
+	s += toString();
+
+	s += ", \"coordinates\" : {" ;
+	s += "\"x\" : " + to_string(this->pt_.x_) + ", ";
+	s += "\"y\" : " + to_string(this->pt_.y_) + ", ";
+	s += "\"z\" : " + to_string(this->pt_.z_) + "}";
+
+	s += "}";
+	s += "}";
+
+	return s;
 }
 
 } /* namespace dxf */

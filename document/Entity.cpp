@@ -13,11 +13,11 @@
 
 using std::stoi;
 using std::stod;
+using std::to_string;
 
 namespace dxf {
 
 Entity::Entity(const vector<Group> &properties) {
-	// TODO Auto-generated constructor stub
 
 	for (unsigned int i = 0; i < properties.size(); ++ i) {
 		Group g = properties[i];
@@ -78,7 +78,7 @@ Entity::Entity(const vector<Group> &properties) {
 				break;
 				// Color number (present if not BYLAYER); zero indicates the BYBLOCK BYLAYER
 				// (floating) color; 256 indicates BYLAYER; a negative value indicates that
-				// the layer is turned off (optional); colorNumber_ default is 256
+				// the layer is turned offto_string( (optional); colorNumber_ default is 256
 			case 62:
 				this->colorNumber_ = stoi(g.value);	// 0 = bylayer,
 				break;
@@ -137,7 +137,7 @@ Entity::Entity(const vector<Group> &properties) {
 			default:
 				break;
 		}
-	} // Fod loop
+	} // For loop
 
 }
 
@@ -147,22 +147,28 @@ Entity::~Entity() {
 
 
 string Entity::toString() {
-	return this->type_ + ": {"
-			+ "\"subclassMarker\" : " + this->subclassMarker_
-//			+ "\"modelSpace\" : " + this->modelSpace_
-			+ "\"layer\" : " + this->layer_
-			+ "\"lineType_\" : " + this->lineType_+ "}";
+	string s;
+
+	s += "\"handle\" : \"" + this->handle_ + "\", ";
+	s += "\"line_style\" : \"" + this->lineStyle_ + "\", ";
+	s += "\"subclass_marker\" : \"" + this->subclassMarker_ + "\", ";
+	s += "\"model_space\" : " + to_string(this->modelSpace_) + ", ";
+	s += "\"layer\" : \"" + this->layer_ + "\", ";
+	s += "\"line_type\" : \"" + this->lineType_ + "\", ";
+	s += "\"color_number\" : " + to_string(this->colorNumber_) + ", ";
+	s += "\"line_weight\" : " + to_string(this->lineWeight_) + ", ";
+	s += "\"linetype_scale\" : " + to_string(this->linetypeScale_) + ", ";
+	s += "\"visible\" : " + to_string(this->visible_) + ", ";
+	s += "\"color_rgb\" : {" ;
+		s += "\"red\" : " + to_string(this->rgb_.red_) + ", ";
+		s += "\"green\" : " + to_string(this->rgb_.green_) + ", ";
+		s += "\"blue\" : " + to_string(this->rgb_.blue_) + ", ";
+	s += "}, ";
+	s += "\"shadow_mode\" : " + to_string(this->shadowMode_)
+			;
+
+	return s;
 }
 
-/*
-Entity::Entity(const Entity &other) {
-	// TODO Auto-generated constructor stub
-
-}
-
-Entity::Entity(Entity &&other) {
-	// TODO Auto-generated constructor stub
-}
-*/
 
 } /* namespace dxf */

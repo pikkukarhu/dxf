@@ -11,6 +11,8 @@
 
 namespace dxf {
 
+using std::to_string;
+
 Line::Line(const vector<Group> &properties) :Entity(properties) {
 	// TODO Auto-generated constructor stub
 	// Read end & start from groups. (Other line spacific) Entity should read directly
@@ -54,6 +56,25 @@ Line::Line(const vector<Group> &properties) :Entity(properties) {
 				break;
 		}
 	}
+}
+
+string Line::toJson() {
+	string s;
+	s += "{\"line\" : {";
+		s += toString();
+
+		s += ", \"start_point\" : {" ;
+		s += "\"x\" : " + to_string(this->start_.x_) + ", ";
+		s += "\"y\" : " + to_string(this->start_.y_) + ", ";
+		s += "\"z\" : " + to_string(this->start_.z_) + "}";
+
+		s += ", \"end_point\" : {" ;
+		s += "\"x\" : " + to_string(this->end_.x_) + ", ";
+		s += "\"y\" : " + to_string(this->end_.y_) + ", ";
+		s += "\"z\" : " + to_string(this->end_.z_) + "}";
+		s += "}";
+		s += "}";
+	return s;
 }
 
 } /* namespace dxf */

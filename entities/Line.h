@@ -33,6 +33,8 @@ private:
 public:
 	Line(const vector<Group> &properties);
 	virtual ~Line() {};
+
+	virtual string toJson();
 };
 
 

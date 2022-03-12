@@ -41,9 +41,9 @@ private:
 	int		colorNumber_ = 0;		// Default 0 Bylayer
 	int		lineWeight_;
 	double	linetypeScale_ = 1.0;
-	bool	visible_	= true;			// Visiblity of entity, default = true;
+	bool	visible_	= true;		// Visiblity of entity, default = true;
 	RGB		rgb_;
-	int		shadowMode_ = 3;			// 0 = Casts and receives shadows
+	int		shadowMode_ = 3;		// 0 = Casts and receives shadows
 									// 1 = Casts shadows
 									// 2 = Receives shadows
 									// 3 = Ignores shadows
@@ -60,10 +60,6 @@ public:
 	Entity(const std::vector<dxf::Group>&);
 	virtual ~Entity();
 
-	/*
-	Entity(const Entity &other);
-	Entity(Entity &&other);
-	*/
 
 	inline string	getType() { return this->type_;	}
 	inline string	getHandle() { return this->handle_;}
@@ -80,6 +76,7 @@ public:
 	inline int		getShadowMode() { return this->shadowMode_;}
 
 	virtual string toString();
+	virtual string toJson() = 0;
 };
 
 } /* namespace dxf */

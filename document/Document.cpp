@@ -12,6 +12,7 @@
 
 #include "EntityFactory.h"
 #include "file/File.h"
+#include "tables/Table.h"
 
 using std::cout;
 using std::endl;
@@ -41,6 +42,8 @@ Document::Document(string file) {
     vector<Group> entity;		// Buffer of one entitity lines
     vector<Group> table;
 
+    Table* currentTable = nullptr;
+
     Group g;
     while (f.readGroup(g)) {
 
@@ -69,32 +72,37 @@ Document::Document(string file) {
     	 */
     	if (section == "TABLES") {
 
+    		cout << g.groupcode << " : " << g.value << endl;
+    		if (g.groupcode == 0) {
 
-    		if (g.groupcode == 0 && g.value == "TABLE") {
-    			// start new table. Put current table (If exists = not nullptr) to tables of Document (Map, key: table type)
-    			// dxf allows many table sections with same type?? need merge if exists
-    			tableHeader = true;
-    		}
-    		else if (g.groupcode == 0 && g.value == "ENDTAB") { // table ready
-    			// create (last) table entry from tables-vector and add to current table object.
-    			// Close table.
+    			// How to handle right, if table have zero entry?
+    			//
 
-    		}
-    		else if (g.groupcode == 2) {	// Start new table entry
-    			if (tableHeader) {
-    				tableHeader = false;
-    				// Finalize table header here. Means create table object from table-vector
-    				// Can but table-object all ready here to tables map. Better ???
-    				// Better here. Otherwise need put both TABLE & ENDTABLE elements, so that also last table of tables section get saved
+    			if (g.value == "TABLE") {
+    				tableHeader = true;
+    			}
+    			else if (g.value == "ENDTAB") { // table ready
+    				currentTable->createEntry(table);	// Add last entry to table
+    				table.clear();										// Empty used buffer
+    			    currentTable = nullptr;								// Current done.
+    			    tableHeader = false;
     			}
     			else {
-    				if (table.size() > 0) {
-    					// Create new table entry from table-vector and add to current table object.
-    					// Instead flag can use directly table = null.
+    				if (tableHeader) {
+    					currentTable = new Table(table);
+    				    this->tables_.push_back(currentTable);
     				}
+    				else {
+    					if (currentTable == nullptr) {
+    						cout << "ERROR NULL PTR" << endl;
+    					}
+    					// Create entry, Add to currentTable
+    					currentTable->createEntry(table);
+    					table.clear();
+    					table.push_back(g);
+    				}
+    				tableHeader = false;
     			}
-    			table.clear();		// Clean previous objects data
-    			table.push_back(g); // Type of table entry.
     		}
     		else {
     			table.push_back(g);	// Add to data vector, used to create new object (Table or table entry) when next start or table ends.
@@ -109,7 +117,6 @@ Document::Document(string file) {
 
     		if (g.groupcode == 0) { // start new entity
 
-    			// if previous entity > 0, print entity
     			if (entity.size() > 0) {
 
     				Entity* e = ef.create(entity);
@@ -137,7 +144,7 @@ Document::~Document() {
 		Entity* e = entities_[i];
 
 		// Debug code during development. Shows entityes have been created
-		cout << e->toString() << endl;
+		cout << e->toJson() << endl;
 
 		delete e;
 	}

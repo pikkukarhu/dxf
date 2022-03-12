@@ -34,6 +34,8 @@ public:
 	inline double x() { return this->pt_.x_; }
 	inline double y() { return this->pt_.y_; }
 	inline double z() { return this->pt_.z_; }
+
+	virtual string toJson();
 };
 
 
