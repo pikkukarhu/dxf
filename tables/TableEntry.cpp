@@ -41,4 +41,15 @@ TableEntry::~TableEntry() {
 	// TODO Auto-generated destructor stub
 }
 
+string TableEntry::toString() {
+	string s;
+	s += "\"entry_type\" : \"" + this->entryType_ +"\", ";
+	s += "\"handle\" : \"" + this->handle_ +"\", ";
+	s += "\"owner_handle\" : \"" + this->ownerHandle_ +"\", ";
+	s += "\"subclass_marker\" : \"" + this->subclassMarker_ +"\"";
+
+	return s;
+
+}
+
 } /* namespace dxf */

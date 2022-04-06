@@ -47,7 +47,7 @@ Document::Document(string file) {
     Group g;
     while (f.readGroup(g)) {
 
-    	// Start new section
+    	// Start new section    	    continue;
     	if (g.groupcode == 0 && g.value == "SECTION") {
     		sectionStart = true;
     		section = "";
@@ -72,32 +72,34 @@ Document::Document(string file) {
     	 */
     	if (section == "TABLES") {
 
-    		cout << g.groupcode << " : " << g.value << endl;
     		if (g.groupcode == 0) {
-
-    			// How to handle right, if table have zero entry?
-    			//
 
     			if (g.value == "TABLE") {
     				tableHeader = true;
     			}
     			else if (g.value == "ENDTAB") { // table ready
-    				currentTable->createEntry(table);	// Add last entry to table
-    				table.clear();										// Empty used buffer
-    			    currentTable = nullptr;								// Current done.
+
+    				if (currentTable != nullptr) {
+    					currentTable->createEntry(table);	// Add last entry to table
+    				}
+    				table.clear();							// Empty used buffer
+    			    currentTable = nullptr;					// Current done.
     			    tableHeader = false;
     			}
     			else {
+
     				if (tableHeader) {
+
     					currentTable = new Table(table);
     				    this->tables_.push_back(currentTable);
+    				    cout << currentTable->toJson() << endl;
     				}
     				else {
-    					if (currentTable == nullptr) {
-    						cout << "ERROR NULL PTR" << endl;
+
+    					if (currentTable != nullptr) {
+    						// Create entry, Add to currentTable
+    						currentTable->createEntry(table);
     					}
-    					// Create entry, Add to currentTable
-    					currentTable->createEntry(table);
     					table.clear();
     					table.push_back(g);
     				}
@@ -108,7 +110,6 @@ Document::Document(string file) {
     			table.push_back(g);	// Add to data vector, used to create new object (Table or table entry) when next start or table ends.
     		}
     	}
-
 
     	/*
     	 * In entities section, read known entities, list unknown to stdout
@@ -139,13 +140,20 @@ Document::Document(string file) {
 
 Document::~Document() {
 
+	for (unsigned int i = 0; i < this->tables_.size(); ++i) {
+		Table* t = tables_[i];
+		cout << t->toJson() << endl;
+
+		delete t;
+	}
 
 	for (unsigned int i = 0; i < entities_.size(); ++i) {
 		Entity* e = entities_[i];
 
 		// Debug code during development. Shows entityes have been created
-		cout << e->toJson() << endl;
-
+		if (i < 20) {
+			cout << e->toJson() << endl;
+		}
 		delete e;
 	}
 }

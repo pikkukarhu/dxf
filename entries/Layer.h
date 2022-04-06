@@ -39,6 +39,9 @@ private:
 public:
 	Layer(const vector<Group> &properties);
 	virtual ~Layer();
+
+	virtual string toString();
+	virtual string toJson();
 };
 
 } /* namespace dxf */

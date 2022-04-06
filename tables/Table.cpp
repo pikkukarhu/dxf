@@ -48,8 +48,30 @@ Table::Table(const vector<Group> &properties) {
 Table::~Table() {
 	// TODO  Debug -- print this table.
 	for (unsigned int i = 0; i < this->entryes_.size(); ++i) {
+
 		delete this->entryes_[i];
 	}
 }
+
+string Table::toString() {
+	string s;
+	s += 	"\"object_type\" : \"" + this->objectType_ + "\", ";
+	s +=   "\"table_name\" : \"" + this->tableName_ + "\", ";
+	s +=   "\"handle\" : \"" + this->handle_ + "\", ";
+	s +=   "\"owner_soft_pointer\" : \"" + this->ownerSOftPtr_ + "\", ";
+	s +=   "\"subclass_marker\" : \"" + this->subclassMarker_ + "\", ";
+	s +=   "\"subclass_marker\" : \"" + this->subclassMarker_ + "\"";
+	return s;
+}
+
+string Table::toJson() {
+	string s = "{" + toString() + ", \"entries\" : [";
+	for (int i = 0; i <  this->entryes_.size(); ++i) {
+		s += this->entryes_[i]->toJson();
+	}
+	s += "]}";
+	return s;
+}
+
 
 } /* namespace dxf */

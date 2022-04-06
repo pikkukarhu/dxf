@@ -15,6 +15,7 @@
 
 using std::vector;
 using std::string;
+using std::to_string;
 
 namespace dxf {
 
@@ -55,6 +56,26 @@ Layer::Layer(const vector<Group> &properties) : TableEntry(properties) {
 
 Layer::~Layer() {
 	// TODO Auto-generated destructor stub
+}
+
+string Layer::toString() {
+	string s = TableEntry::toString();
+
+	s += "\"layer_name\" : \"" + this->layerName_ + "\", ";
+	s += "\"flags\" : \"" + to_string(this->flags_) + "\", ";
+	s += "\"color_number\" : " + to_string(this->colorNumber_) + ", ";
+	s += "\"linetype_name\" : \"" + this->linetypeName_ + "\", ";
+	s += "\"plotting_flag\" : " + to_string(this->plottingFlag_) + ", ";
+	s += "\"line_weight\" : " + to_string(this->lineWeight_) + ", ";
+	s += "\"plot_style_pointer\" : \"" + this->plotStylePtr_ + "\", ";
+	s += "\"material_pointer\" : \"" + this->materialPtr_ + "\", ";
+	s += "\"color_number\" : " + to_string(this->colorNumber_) + ", ";
+
+	return s;
+}
+
+string Layer::toJson() {
+	return "{" + toString() + "}";
 }
 
 } /* namespace dxf */

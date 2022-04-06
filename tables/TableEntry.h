@@ -55,6 +55,9 @@ private:
 public:
 	TableEntry(const vector<dxf::Group> &properties);
 	virtual ~TableEntry();
+
+	virtual string toString();
+	virtual string toJson() = 0;
 };
 
 } /* namespace dxf */

@@ -45,6 +45,9 @@ public:
 
 	inline string Type() { return this->objectType_; }
 	inline void createEntry(const vector<Group> &properties) { this->entryes_.push_back(this->tableFactory_.create(properties));};
+
+	string toString();
+	string toJson();
 };
 
 } /* namespace dxf */
