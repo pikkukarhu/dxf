@@ -14,8 +14,11 @@
 #include <string>
 
 #include "Entity.h"
+#include "entities/Entities.h"
 #include "file/File.h"
+#include "tables/Tables.h"
 #include "tables/Table.h"
+
 
 using std::vector;
 using std::string;
@@ -24,8 +27,11 @@ namespace dxf {
 
 class Document final {
 private:
-	vector<Entity* > entities_;
-	vector<Table *> tables_;
+//	vector<Entity* > entities_;
+	Entities entities_;
+//	vector<Table *> tables_;
+	Tables tables_;
+
 
 	void createEntity(const vector<string>& props);
 	Table* createTable(const vector<string>& props);
