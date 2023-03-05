@@ -18,6 +18,7 @@
 #include "file/File.h"
 #include "tables/Tables.h"
 #include "tables/Table.h"
+#include "blocks/Blocks.h"
 
 
 using std::vector;
@@ -27,11 +28,9 @@ namespace dxf {
 
 class Document final {
 private:
-//	vector<Entity* > entities_;
 	Entities entities_;
-//	vector<Table *> tables_;
 	Tables tables_;
-
+	Blocks blocks_;
 
 	void createEntity(const vector<string>& props);
 	Table* createTable(const vector<string>& props);

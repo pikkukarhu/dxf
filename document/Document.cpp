@@ -59,6 +59,9 @@ Document::Document(string file) {
     		else if (section == "ENTITIES") {
     			this->entities_.read(&f);
     		}
+    		else if (section == "BLOCKS") {
+    			this->blocks_.read(&f);
+    		}
     		else {	// Default read next section to dev/null
     			Section sec;
     			sec.read(&f);

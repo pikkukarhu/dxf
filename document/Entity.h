@@ -47,15 +47,15 @@ private:
 									// 1 = Casts shadows
 									// 2 = Receives shadows
 									// 3 = Ignores shadows
-protected:
+
+
+public:
 
 	struct Point_ {
 		double x_;
 		double y_;
 		double z_;
 	};
-
-public:
 
 	Entity(const std::vector<dxf::Group>&);
 	virtual ~Entity();
