@@ -14,7 +14,6 @@ namespace dxf {
 using std::to_string;
 
 Line::Line(const vector<Group> &properties) :Entity(properties) {
-	// TODO Auto-generated constructor stub
 	// Read end & start from groups. (Other line spacific) Entity should read directly
 
 	for (unsigned int i = 0; i < properties.size(); ++i) {
@@ -60,7 +59,7 @@ Line::Line(const vector<Group> &properties) :Entity(properties) {
 
 string Line::toJson() {
 	string s;
-	s += "{\"line\" : {";
+		s += "{\"line\" : {";
 		s += toString();
 
 		s += ", \"start_point\" : {" ;

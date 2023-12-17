@@ -62,12 +62,7 @@ string Point::toJson() {
 	s += "{\"point\" : {";
 	s += toString();
 
-	s += ", \"coordinates\" : {" ;
-	s += "\"x\" : " + to_string(this->pt_.x_) + ", ";
-	s += "\"y\" : " + to_string(this->pt_.y_) + ", ";
-	s += "\"z\" : " + to_string(this->pt_.z_) + "}";
-
-	s += "}";
+	s += ", \"coordinates\" : " + coordinateString();
 	s += "}";
 
 	return s;

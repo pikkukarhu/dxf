@@ -23,8 +23,6 @@ inline Entity* createLine(const vector<Group> &properties) { return new Line(pro
 inline Entity* createFace3d(const vector<Group> &properties) { return new Face3d(properties); }
 inline Entity* createArc(const vector<Group> &properties) { return new Arc(properties); }
 
-//Entity* (*)(const vector<Group> &)>
-
 
 EntityFactory::EntityFactory() {
 

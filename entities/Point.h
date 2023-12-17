@@ -36,6 +36,13 @@ public:
 	inline double z() { return this->pt_.z_; }
 
 	virtual string toJson();
+
+	inline string coordinateString() {
+		return "{"
+				+ "\"x\" : " + to_string(this->pt_.x_) + ", "
+				+ "\"y\" : " + to_string(this->pt_.y_) + ", "
+				+ "\"z\" : " + to_string(this->pt_.z_) + "}";
+	}
 };
 
 
