@@ -7,3 +7,14 @@ Change Document to File (Because current "Document" makes low level dxf-file han
 It represents the Document abstraction of drawing.
 
 Move Group out from  class File (previous Document), because ENtities need vector of Group as parameter, no string!
+
+## Build
+
+This project uses CMake. To build the project, run:
+
+```bash
+mkdir build
+cd build
+cmake ..
+make
+```

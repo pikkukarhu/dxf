@@ -1,3 +1,6 @@
+# Build directory
+build/
+
 # Prerequisites
 *.d
 
@@ -30,4 +33,10 @@
 *.exe
 *.out
 *.app
-/Debug/
+dxf
+
+# IDEs
+.vscode/
+.project
+.cproject
+.settings/
