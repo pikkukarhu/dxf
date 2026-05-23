@@ -1,0 +1,1 @@
+/usr/bin/c++ -Wl,--dependency-file=CMakeFiles/Ellipse_test.dir/link.d CMakeFiles/Ellipse_test.dir/tests/entities/Ellipse_test.cpp.o -o Ellipse_test  libdxf_lib.a _deps/pugixml-build/libpugixml.a

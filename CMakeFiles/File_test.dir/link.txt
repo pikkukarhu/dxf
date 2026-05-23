@@ -1,0 +1,1 @@
+/usr/bin/c++ -Wl,--dependency-file=CMakeFiles/File_test.dir/link.d CMakeFiles/File_test.dir/tests/file/File_test.cpp.o -o File_test  libdxf_lib.a _deps/pugixml-build/libpugixml.a

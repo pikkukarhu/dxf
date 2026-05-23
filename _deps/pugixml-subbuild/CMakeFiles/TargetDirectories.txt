@@ -1,0 +1,3 @@
+/home/hobbes/projects/cad-solution/dxf/_deps/pugixml-subbuild/CMakeFiles/pugixml-populate.dir
+/home/hobbes/projects/cad-solution/dxf/_deps/pugixml-subbuild/CMakeFiles/edit_cache.dir
+/home/hobbes/projects/cad-solution/dxf/_deps/pugixml-subbuild/CMakeFiles/rebuild_cache.dir

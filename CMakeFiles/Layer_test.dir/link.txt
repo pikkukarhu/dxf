@@ -1,0 +1,1 @@
+/usr/bin/c++ -Wl,--dependency-file=CMakeFiles/Layer_test.dir/link.d CMakeFiles/Layer_test.dir/tests/entries/Layer_test.cpp.o -o Layer_test  libdxf_lib.a _deps/pugixml-build/libpugixml.a

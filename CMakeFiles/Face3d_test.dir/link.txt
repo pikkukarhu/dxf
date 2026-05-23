@@ -1,0 +1,1 @@
+/usr/bin/c++ -Wl,--dependency-file=CMakeFiles/Face3d_test.dir/link.d CMakeFiles/Face3d_test.dir/tests/entities/Face3d_test.cpp.o -o Face3d_test  libdxf_lib.a _deps/pugixml-build/libpugixml.a
