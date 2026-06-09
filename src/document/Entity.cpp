@@ -170,4 +170,21 @@ string Entity::to_string() {
 }
 
 
+void Entity::write_to_json_writer(rapidjson::Writer<rapidjson::StringBuffer>& writer) {
+	writer.Key("handle");          writer.String(this->handle_.c_str());
+	writer.Key("type");            writer.String(this->type_.c_str());
+	writer.Key("layer");           writer.String(this->layer_.c_str());
+	writer.Key("line_type");       writer.String(this->line_type_.c_str());
+	writer.Key("color_number");    writer.Int(this->color_number_);
+	writer.Key("line_weight");     writer.Int(this->line_weight_);
+	writer.Key("visible");         writer.Bool(this->visible_);
+	
+	writer.Key("color_rgb");
+	writer.StartObject();
+	writer.Key("red");             writer.Int(this->rgb_.red);
+	writer.Key("green");           writer.Int(this->rgb_.green);
+	writer.Key("blue");            writer.Int(this->rgb_.blue);
+	writer.EndObject();
+}
+
 } /* namespace dxf */

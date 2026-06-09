@@ -74,6 +74,16 @@ string Point::to_json() {
 	return s;
 }
 
+void Point::write_to_json_writer(rapidjson::Writer<rapidjson::StringBuffer>& writer) {
+	writer.StartObject();
+	writer.Key("point");
+	writer.StartObject();
+	Entity::write_to_json_writer(writer);
+	writer.Key("coordinates"); this->pt_.write_to_json_writer(writer);
+	writer.EndObject();
+	writer.EndObject();
+}
+
 void Point::to_svg(pugi::xml_node& svgNode) {
 	//  <line x1="0" y1="80" x2="100" y2="20" stroke="black" />
 	pugi::xml_node line = svgNode.append_child("line");

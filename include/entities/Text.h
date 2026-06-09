@@ -21,6 +21,7 @@ public:
 	virtual ~Text() {}
 
 	virtual string to_json() override;
+	virtual void write_to_json_writer(rapidjson::Writer<rapidjson::StringBuffer>& writer) override;
 	virtual void to_svg(pugi::xml_node& svg_node) override;
 };
 

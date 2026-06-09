@@ -97,7 +97,7 @@ rebuild_cache/fast: rebuild_cache
 
 # Special rule for the target list_install_components
 list_install_components:
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --cyan "Available install components are: \"Development\""
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --cyan "Available install components are: \"Development\" \"Unspecified\" \"dev\" \"doc\" \"examples\" \"pkgconfig\""
 .PHONY : list_install_components
 
 # Special rule for the target list_install_components
@@ -860,6 +860,357 @@ pugixml-static/fast:
 	$(MAKE) $(MAKESILENT) -f _deps/pugixml-build/CMakeFiles/pugixml-static.dir/build.make _deps/pugixml-build/CMakeFiles/pugixml-static.dir/build
 .PHONY : pugixml-static/fast
 
+#=============================================================================
+# Target rules for targets named travis_doc
+
+# Build rule for target.
+travis_doc: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 travis_doc
+.PHONY : travis_doc
+
+# fast build rule for target.
+travis_doc/fast:
+	$(MAKE) $(MAKESILENT) -f _deps/rapidjson-build/CMakeFiles/travis_doc.dir/build.make _deps/rapidjson-build/CMakeFiles/travis_doc.dir/build
+.PHONY : travis_doc/fast
+
+#=============================================================================
+# Target rules for targets named archivertest
+
+# Build rule for target.
+archivertest: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 archivertest
+.PHONY : archivertest
+
+# fast build rule for target.
+archivertest/fast:
+	$(MAKE) $(MAKESILENT) -f _deps/rapidjson-build/example/CMakeFiles/archivertest.dir/build.make _deps/rapidjson-build/example/CMakeFiles/archivertest.dir/build
+.PHONY : archivertest/fast
+
+#=============================================================================
+# Target rules for targets named capitalize
+
+# Build rule for target.
+capitalize: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 capitalize
+.PHONY : capitalize
+
+# fast build rule for target.
+capitalize/fast:
+	$(MAKE) $(MAKESILENT) -f _deps/rapidjson-build/example/CMakeFiles/capitalize.dir/build.make _deps/rapidjson-build/example/CMakeFiles/capitalize.dir/build
+.PHONY : capitalize/fast
+
+#=============================================================================
+# Target rules for targets named condense
+
+# Build rule for target.
+condense: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 condense
+.PHONY : condense
+
+# fast build rule for target.
+condense/fast:
+	$(MAKE) $(MAKESILENT) -f _deps/rapidjson-build/example/CMakeFiles/condense.dir/build.make _deps/rapidjson-build/example/CMakeFiles/condense.dir/build
+.PHONY : condense/fast
+
+#=============================================================================
+# Target rules for targets named filterkey
+
+# Build rule for target.
+filterkey: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 filterkey
+.PHONY : filterkey
+
+# fast build rule for target.
+filterkey/fast:
+	$(MAKE) $(MAKESILENT) -f _deps/rapidjson-build/example/CMakeFiles/filterkey.dir/build.make _deps/rapidjson-build/example/CMakeFiles/filterkey.dir/build
+.PHONY : filterkey/fast
+
+#=============================================================================
+# Target rules for targets named filterkeydom
+
+# Build rule for target.
+filterkeydom: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 filterkeydom
+.PHONY : filterkeydom
+
+# fast build rule for target.
+filterkeydom/fast:
+	$(MAKE) $(MAKESILENT) -f _deps/rapidjson-build/example/CMakeFiles/filterkeydom.dir/build.make _deps/rapidjson-build/example/CMakeFiles/filterkeydom.dir/build
+.PHONY : filterkeydom/fast
+
+#=============================================================================
+# Target rules for targets named jsonx
+
+# Build rule for target.
+jsonx: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 jsonx
+.PHONY : jsonx
+
+# fast build rule for target.
+jsonx/fast:
+	$(MAKE) $(MAKESILENT) -f _deps/rapidjson-build/example/CMakeFiles/jsonx.dir/build.make _deps/rapidjson-build/example/CMakeFiles/jsonx.dir/build
+.PHONY : jsonx/fast
+
+#=============================================================================
+# Target rules for targets named lookaheadparser
+
+# Build rule for target.
+lookaheadparser: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 lookaheadparser
+.PHONY : lookaheadparser
+
+# fast build rule for target.
+lookaheadparser/fast:
+	$(MAKE) $(MAKESILENT) -f _deps/rapidjson-build/example/CMakeFiles/lookaheadparser.dir/build.make _deps/rapidjson-build/example/CMakeFiles/lookaheadparser.dir/build
+.PHONY : lookaheadparser/fast
+
+#=============================================================================
+# Target rules for targets named messagereader
+
+# Build rule for target.
+messagereader: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 messagereader
+.PHONY : messagereader
+
+# fast build rule for target.
+messagereader/fast:
+	$(MAKE) $(MAKESILENT) -f _deps/rapidjson-build/example/CMakeFiles/messagereader.dir/build.make _deps/rapidjson-build/example/CMakeFiles/messagereader.dir/build
+.PHONY : messagereader/fast
+
+#=============================================================================
+# Target rules for targets named parsebyparts
+
+# Build rule for target.
+parsebyparts: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 parsebyparts
+.PHONY : parsebyparts
+
+# fast build rule for target.
+parsebyparts/fast:
+	$(MAKE) $(MAKESILENT) -f _deps/rapidjson-build/example/CMakeFiles/parsebyparts.dir/build.make _deps/rapidjson-build/example/CMakeFiles/parsebyparts.dir/build
+.PHONY : parsebyparts/fast
+
+#=============================================================================
+# Target rules for targets named pretty
+
+# Build rule for target.
+pretty: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 pretty
+.PHONY : pretty
+
+# fast build rule for target.
+pretty/fast:
+	$(MAKE) $(MAKESILENT) -f _deps/rapidjson-build/example/CMakeFiles/pretty.dir/build.make _deps/rapidjson-build/example/CMakeFiles/pretty.dir/build
+.PHONY : pretty/fast
+
+#=============================================================================
+# Target rules for targets named prettyauto
+
+# Build rule for target.
+prettyauto: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 prettyauto
+.PHONY : prettyauto
+
+# fast build rule for target.
+prettyauto/fast:
+	$(MAKE) $(MAKESILENT) -f _deps/rapidjson-build/example/CMakeFiles/prettyauto.dir/build.make _deps/rapidjson-build/example/CMakeFiles/prettyauto.dir/build
+.PHONY : prettyauto/fast
+
+#=============================================================================
+# Target rules for targets named schemavalidator
+
+# Build rule for target.
+schemavalidator: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 schemavalidator
+.PHONY : schemavalidator
+
+# fast build rule for target.
+schemavalidator/fast:
+	$(MAKE) $(MAKESILENT) -f _deps/rapidjson-build/example/CMakeFiles/schemavalidator.dir/build.make _deps/rapidjson-build/example/CMakeFiles/schemavalidator.dir/build
+.PHONY : schemavalidator/fast
+
+#=============================================================================
+# Target rules for targets named serialize
+
+# Build rule for target.
+serialize: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 serialize
+.PHONY : serialize
+
+# fast build rule for target.
+serialize/fast:
+	$(MAKE) $(MAKESILENT) -f _deps/rapidjson-build/example/CMakeFiles/serialize.dir/build.make _deps/rapidjson-build/example/CMakeFiles/serialize.dir/build
+.PHONY : serialize/fast
+
+#=============================================================================
+# Target rules for targets named simpledom
+
+# Build rule for target.
+simpledom: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 simpledom
+.PHONY : simpledom
+
+# fast build rule for target.
+simpledom/fast:
+	$(MAKE) $(MAKESILENT) -f _deps/rapidjson-build/example/CMakeFiles/simpledom.dir/build.make _deps/rapidjson-build/example/CMakeFiles/simpledom.dir/build
+.PHONY : simpledom/fast
+
+#=============================================================================
+# Target rules for targets named simplereader
+
+# Build rule for target.
+simplereader: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 simplereader
+.PHONY : simplereader
+
+# fast build rule for target.
+simplereader/fast:
+	$(MAKE) $(MAKESILENT) -f _deps/rapidjson-build/example/CMakeFiles/simplereader.dir/build.make _deps/rapidjson-build/example/CMakeFiles/simplereader.dir/build
+.PHONY : simplereader/fast
+
+#=============================================================================
+# Target rules for targets named simplepullreader
+
+# Build rule for target.
+simplepullreader: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 simplepullreader
+.PHONY : simplepullreader
+
+# fast build rule for target.
+simplepullreader/fast:
+	$(MAKE) $(MAKESILENT) -f _deps/rapidjson-build/example/CMakeFiles/simplepullreader.dir/build.make _deps/rapidjson-build/example/CMakeFiles/simplepullreader.dir/build
+.PHONY : simplepullreader/fast
+
+#=============================================================================
+# Target rules for targets named simplewriter
+
+# Build rule for target.
+simplewriter: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 simplewriter
+.PHONY : simplewriter
+
+# fast build rule for target.
+simplewriter/fast:
+	$(MAKE) $(MAKESILENT) -f _deps/rapidjson-build/example/CMakeFiles/simplewriter.dir/build.make _deps/rapidjson-build/example/CMakeFiles/simplewriter.dir/build
+.PHONY : simplewriter/fast
+
+#=============================================================================
+# Target rules for targets named sortkeys
+
+# Build rule for target.
+sortkeys: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 sortkeys
+.PHONY : sortkeys
+
+# fast build rule for target.
+sortkeys/fast:
+	$(MAKE) $(MAKESILENT) -f _deps/rapidjson-build/example/CMakeFiles/sortkeys.dir/build.make _deps/rapidjson-build/example/CMakeFiles/sortkeys.dir/build
+.PHONY : sortkeys/fast
+
+#=============================================================================
+# Target rules for targets named tutorial
+
+# Build rule for target.
+tutorial: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 tutorial
+.PHONY : tutorial
+
+# fast build rule for target.
+tutorial/fast:
+	$(MAKE) $(MAKESILENT) -f _deps/rapidjson-build/example/CMakeFiles/tutorial.dir/build.make _deps/rapidjson-build/example/CMakeFiles/tutorial.dir/build
+.PHONY : tutorial/fast
+
+#=============================================================================
+# Target rules for targets named examples
+
+# Build rule for target.
+examples: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 examples
+.PHONY : examples
+
+# fast build rule for target.
+examples/fast:
+	$(MAKE) $(MAKESILENT) -f _deps/rapidjson-build/example/CMakeFiles/examples.dir/build.make _deps/rapidjson-build/example/CMakeFiles/examples.dir/build
+.PHONY : examples/fast
+
+#=============================================================================
+# Target rules for targets named tests
+
+# Build rule for target.
+tests: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 tests
+.PHONY : tests
+
+# fast build rule for target.
+tests/fast:
+	$(MAKE) $(MAKESILENT) -f _deps/rapidjson-build/test/CMakeFiles/tests.dir/build.make _deps/rapidjson-build/test/CMakeFiles/tests.dir/build
+.PHONY : tests/fast
+
+#=============================================================================
+# Target rules for targets named gtest
+
+# Build rule for target.
+gtest: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 gtest
+.PHONY : gtest
+
+# fast build rule for target.
+gtest/fast:
+	$(MAKE) $(MAKESILENT) -f googletest/CMakeFiles/gtest.dir/build.make googletest/CMakeFiles/gtest.dir/build
+.PHONY : gtest/fast
+
+#=============================================================================
+# Target rules for targets named gtest_main
+
+# Build rule for target.
+gtest_main: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 gtest_main
+.PHONY : gtest_main
+
+# fast build rule for target.
+gtest_main/fast:
+	$(MAKE) $(MAKESILENT) -f googletest/CMakeFiles/gtest_main.dir/build.make googletest/CMakeFiles/gtest_main.dir/build
+.PHONY : gtest_main/fast
+
+#=============================================================================
+# Target rules for targets named perftest
+
+# Build rule for target.
+perftest: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 perftest
+.PHONY : perftest
+
+# fast build rule for target.
+perftest/fast:
+	$(MAKE) $(MAKESILENT) -f _deps/rapidjson-build/test/perftest/CMakeFiles/perftest.dir/build.make _deps/rapidjson-build/test/perftest/CMakeFiles/perftest.dir/build
+.PHONY : perftest/fast
+
+#=============================================================================
+# Target rules for targets named namespacetest
+
+# Build rule for target.
+namespacetest: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 namespacetest
+.PHONY : namespacetest
+
+# fast build rule for target.
+namespacetest/fast:
+	$(MAKE) $(MAKESILENT) -f _deps/rapidjson-build/test/unittest/CMakeFiles/namespacetest.dir/build.make _deps/rapidjson-build/test/unittest/CMakeFiles/namespacetest.dir/build
+.PHONY : namespacetest/fast
+
+#=============================================================================
+# Target rules for targets named unittest
+
+# Build rule for target.
+unittest: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 unittest
+.PHONY : unittest
+
+# fast build rule for target.
+unittest/fast:
+	$(MAKE) $(MAKESILENT) -f _deps/rapidjson-build/test/unittest/CMakeFiles/unittest.dir/build.make _deps/rapidjson-build/test/unittest/CMakeFiles/unittest.dir/build
+.PHONY : unittest/fast
+
 src/blocks/Block.o: src/blocks/Block.cpp.o
 .PHONY : src/blocks/Block.o
 
@@ -1267,6 +1618,30 @@ src/entities/Text.s: src/entities/Text.cpp.s
 src/entities/Text.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/dxf_lib.dir/build.make CMakeFiles/dxf_lib.dir/src/entities/Text.cpp.s
 .PHONY : src/entities/Text.cpp.s
+
+src/entities/TextBase.o: src/entities/TextBase.cpp.o
+.PHONY : src/entities/TextBase.o
+
+# target to build an object file
+src/entities/TextBase.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/dxf_lib.dir/build.make CMakeFiles/dxf_lib.dir/src/entities/TextBase.cpp.o
+.PHONY : src/entities/TextBase.cpp.o
+
+src/entities/TextBase.i: src/entities/TextBase.cpp.i
+.PHONY : src/entities/TextBase.i
+
+# target to preprocess a source file
+src/entities/TextBase.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/dxf_lib.dir/build.make CMakeFiles/dxf_lib.dir/src/entities/TextBase.cpp.i
+.PHONY : src/entities/TextBase.cpp.i
+
+src/entities/TextBase.s: src/entities/TextBase.cpp.s
+.PHONY : src/entities/TextBase.s
+
+# target to generate assembly for a file
+src/entities/TextBase.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/dxf_lib.dir/build.make CMakeFiles/dxf_lib.dir/src/entities/TextBase.cpp.s
+.PHONY : src/entities/TextBase.cpp.s
 
 src/entries/Layer.o: src/entries/Layer.cpp.o
 .PHONY : src/entries/Layer.o
@@ -2005,6 +2380,9 @@ help:
 	@echo "... NightlySubmit"
 	@echo "... NightlyTest"
 	@echo "... NightlyUpdate"
+	@echo "... examples"
+	@echo "... tests"
+	@echo "... travis_doc"
 	@echo "... Arc_test"
 	@echo "... AttDef_test"
 	@echo "... Attrib_test"
@@ -2027,9 +2405,33 @@ help:
 	@echo "... Table_test"
 	@echo "... Tables_test"
 	@echo "... Text_test"
+	@echo "... archivertest"
+	@echo "... capitalize"
+	@echo "... condense"
 	@echo "... dxf"
 	@echo "... dxf_lib"
+	@echo "... filterkey"
+	@echo "... filterkeydom"
+	@echo "... gtest"
+	@echo "... gtest_main"
+	@echo "... jsonx"
+	@echo "... lookaheadparser"
+	@echo "... messagereader"
+	@echo "... namespacetest"
+	@echo "... parsebyparts"
+	@echo "... perftest"
+	@echo "... pretty"
+	@echo "... prettyauto"
 	@echo "... pugixml-static"
+	@echo "... schemavalidator"
+	@echo "... serialize"
+	@echo "... simpledom"
+	@echo "... simplepullreader"
+	@echo "... simplereader"
+	@echo "... simplewriter"
+	@echo "... sortkeys"
+	@echo "... tutorial"
+	@echo "... unittest"
 	@echo "... src/blocks/Block.o"
 	@echo "... src/blocks/Block.i"
 	@echo "... src/blocks/Block.s"
@@ -2081,6 +2483,9 @@ help:
 	@echo "... src/entities/Text.o"
 	@echo "... src/entities/Text.i"
 	@echo "... src/entities/Text.s"
+	@echo "... src/entities/TextBase.o"
+	@echo "... src/entities/TextBase.i"
+	@echo "... src/entities/TextBase.s"
 	@echo "... src/entries/Layer.o"
 	@echo "... src/entries/Layer.i"
 	@echo "... src/entries/Layer.s"

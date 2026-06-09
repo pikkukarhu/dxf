@@ -29,6 +29,7 @@ public:
 
 	virtual void read(File* f);
 	virtual std::string to_json();
+	virtual void write_to_json_writer(rapidjson::Writer<rapidjson::StringBuffer>& writer);
 	virtual void write_json(const std::string& file);
 
 	void to_svg(pugi::xml_node& svgNode);

@@ -85,4 +85,14 @@ void Tables::read(File* f) {
     cerr << "Unexpected end of file" << endl;
 }
 
+void Tables::write_to_json_writer(rapidjson::Writer<rapidjson::StringBuffer>& writer) {
+	writer.StartArray();
+	for (size_t i = 0; i < tables_.size(); ++i) {
+		if (tables_[i] != nullptr) {
+			tables_[i]->write_to_json_writer(writer);
+		}
+	}
+	writer.EndArray();
+}
+
 } /* namespace dxf */

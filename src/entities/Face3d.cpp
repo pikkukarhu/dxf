@@ -81,6 +81,19 @@ string Face3d::to_json() {
 	return s;
 }
 
+void Face3d::write_to_json_writer(rapidjson::Writer<rapidjson::StringBuffer>& writer) {
+	writer.StartObject();
+	writer.Key("3d_face");
+	writer.StartObject();
+	Entity::write_to_json_writer(writer);
+	writer.Key("first_point"); this->first_.write_to_json_writer(writer);
+	writer.Key("second_point"); this->second_.write_to_json_writer(writer);
+	writer.Key("third_point"); this->third_.write_to_json_writer(writer);
+	writer.Key("fourth_point"); this->fourth_.write_to_json_writer(writer);
+	writer.EndObject();
+	writer.EndObject();
+}
+
 void Face3d::to_svg(pugi::xml_node& svg_node) {
 	svg_node.append_child(pugi::node_comment).set_value("FACE3D -not yet implemented");
 }

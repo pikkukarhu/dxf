@@ -33,6 +33,8 @@ file(REMOVE_RECURSE
   "CMakeFiles/dxf_lib.dir/src/entities/Point.cpp.o.d"
   "CMakeFiles/dxf_lib.dir/src/entities/Text.cpp.o"
   "CMakeFiles/dxf_lib.dir/src/entities/Text.cpp.o.d"
+  "CMakeFiles/dxf_lib.dir/src/entities/TextBase.cpp.o"
+  "CMakeFiles/dxf_lib.dir/src/entities/TextBase.cpp.o.d"
   "CMakeFiles/dxf_lib.dir/src/entries/Layer.cpp.o"
   "CMakeFiles/dxf_lib.dir/src/entries/Layer.cpp.o.d"
   "CMakeFiles/dxf_lib.dir/src/file/File.cpp.o"

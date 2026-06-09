@@ -81,6 +81,19 @@ string Arc::to_json() {
 	return s;
 }
 
+void Arc::write_to_json_writer(rapidjson::Writer<rapidjson::StringBuffer>& writer) {
+	writer.StartObject();
+	writer.Key("arc");
+	writer.StartObject();
+	Entity::write_to_json_writer(writer);
+	writer.Key("center_point"); this->center_point_.write_to_json_writer(writer);
+	writer.Key("start_angle"); writer.Double(this->start_angle_);
+	writer.Key("end_angle"); writer.Double(this->end_angle_);
+	writer.Key("radius"); writer.Double(this->radius_);
+	writer.EndObject();
+	writer.EndObject();
+}
+
 void Arc::to_svg(pugi::xml_node& svg_node) {
 
     pugi::xml_node path = svg_node.append_child("path");

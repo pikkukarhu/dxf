@@ -189,6 +189,19 @@ string Ellipse::to_json() {
 	return s;
 }
 
+void Ellipse::write_to_json_writer(rapidjson::Writer<rapidjson::StringBuffer>& writer) {
+	writer.StartObject();
+	writer.Key("ellipse");
+	writer.StartObject();
+	Entity::write_to_json_writer(writer);
+	writer.Key("center_point"); this->center_point_.write_to_json_writer(writer);
+	writer.Key("end_point"); this->end_point_.write_to_json_writer(writer);
+	writer.Key("start_angle"); writer.Double(this->start_angle_);
+	writer.Key("end_angle"); writer.Double(this->end_angle_);
+	writer.EndObject();
+	writer.EndObject();
+}
+
 void Ellipse::to_svg(pugi::xml_node& svg_node) {
     double x = center_point_.x_; // Center point x
     double y = center_point_.y_; // Center point y

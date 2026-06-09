@@ -63,14 +63,30 @@ string Table::toString() {
 	s +=   "\"subclass_marker\" : \"" + this->subclassMarker_ + "\"";
 	return s;
 }
-
 string Table::toJson() {
-	string s = "{" + toString() + ", \"entries\" : [";
-	for (int i = 0; i <  this->entryes_.size(); ++i) {
-		s += this->entryes_[i]->toJson();
+	rapidjson::StringBuffer buffer;
+	rapidjson::Writer<rapidjson::StringBuffer> writer(buffer);
+	write_to_json_writer(writer);
+	return buffer.GetString();
+}
+
+void Table::write_to_json_writer(rapidjson::Writer<rapidjson::StringBuffer>& writer) {
+	writer.StartObject();
+	writer.Key("table_name");      writer.String(this->tableName_.c_str());
+	writer.Key("handle");          writer.String(this->handle_.c_str());
+	writer.Key("owner_soft_ptr");  writer.String(this->ownerSOftPtr_.c_str());
+	writer.Key("subclass_marker"); writer.String(this->subclassMarker_.c_str());
+	writer.Key("entries_max");     writer.Int(this->entriesMaxNro_);
+
+	writer.Key("entries");
+	writer.StartArray();
+	for (size_t i = 0; i < this->entryes_.size(); ++i) {
+		if (this->entryes_[i] != nullptr) {
+			this->entryes_[i]->write_to_json_writer(writer);
+		}
 	}
-	s += "]}";
-	return s;
+	writer.EndArray();
+	writer.EndObject();
 }
 
 

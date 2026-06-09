@@ -4,7 +4,7 @@
 # compile CXX with /usr/bin/c++
 CXX_DEFINES = 
 
-CXX_INCLUDES = -I/home/hobbes/projects/cad-solution/dxf/include -I/home/hobbes/projects/cad-solution/dxf/include/blocks -I/home/hobbes/projects/cad-solution/dxf/include/document -I/home/hobbes/projects/cad-solution/dxf/include/entities -I/home/hobbes/projects/cad-solution/dxf/include/entries -I/home/hobbes/projects/cad-solution/dxf/include/file -I/home/hobbes/projects/cad-solution/dxf/include/header -I/home/hobbes/projects/cad-solution/dxf/include/tables -I/home/hobbes/projects/cad-solution/dxf/_deps/pugixml-src/src
+CXX_INCLUDES = -I/home/hobbes/projects/cad-solution/dxf/include -I/home/hobbes/projects/cad-solution/dxf/include/blocks -I/home/hobbes/projects/cad-solution/dxf/include/document -I/home/hobbes/projects/cad-solution/dxf/include/entities -I/home/hobbes/projects/cad-solution/dxf/include/entries -I/home/hobbes/projects/cad-solution/dxf/include/file -I/home/hobbes/projects/cad-solution/dxf/include/header -I/home/hobbes/projects/cad-solution/dxf/include/tables -I/home/hobbes/projects/cad-solution/dxf/_deps/rapidjson-src/include -I/home/hobbes/projects/cad-solution/dxf/_deps/pugixml-src/src
 
-CXX_FLAGS = -std=gnu++17
+CXX_FLAGS = -O2 -g -DNDEBUG -std=gnu++17
 

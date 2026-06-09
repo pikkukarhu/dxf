@@ -32,8 +32,10 @@ Entities::Entities() {
 }
 
 Entities::~Entities() {
-	// TODO Auto-generated destructor stub
-	// TODO delete[] entries in entities_ list.
+	for (Entity* e : this->entities_) {
+		delete e;
+	}
+	this->entities_.clear();
 }
 
 void Entities::read(File* f) {
@@ -69,19 +71,20 @@ void Entities::read(File* f) {
 }
 
 std::string Entities::to_json() {
+	rapidjson::StringBuffer buffer;
+	rapidjson::Writer<rapidjson::StringBuffer> writer(buffer);
+	write_to_json_writer(writer);
+	return buffer.GetString();
+}
 
-	std::string jsonResult = "[";
+void Entities::write_to_json_writer(rapidjson::Writer<rapidjson::StringBuffer>& writer) {
+	writer.StartArray();
 	for (size_t i = 0; i < entities_.size(); ++i) {
-		jsonResult += entities_[i]->to_json();
-
-		// Add a comma if it's not the last element
-		if (i < entities_.size() - 1) {
-			jsonResult += ", ";
+		if (entities_[i] != nullptr) {
+			entities_[i]->write_to_json_writer(writer);
 		}
-		jsonResult += '\n';
 	}
-	jsonResult += "]";
-	return jsonResult;
+	writer.EndArray();
 }
 
 void Entities::write_json(const std::string& file) {
@@ -99,7 +102,9 @@ void Entities::write_json(const std::string& file) {
 void Entities::to_svg(pugi::xml_node& svg_node) {
 
 	for (size_t i = 0; i < entities_.size(); ++i) {
-		entities_[i]->to_svg(svg_node);
+		if (entities_[i] != nullptr) {
+			entities_[i]->to_svg(svg_node);
+		}
 	}
 }
 

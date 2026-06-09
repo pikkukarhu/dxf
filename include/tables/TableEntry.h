@@ -12,6 +12,8 @@
 
 #include <string>
 #include <vector>
+#include <rapidjson/writer.h>
+#include <rapidjson/stringbuffer.h>
 
 #include "file/File.h"
 
@@ -58,6 +60,7 @@ public:
 
 	virtual string toString();
 	virtual string toJson() = 0;
+	virtual void write_to_json_writer(rapidjson::Writer<rapidjson::StringBuffer>& writer);
 };
 
 } /* namespace dxf */

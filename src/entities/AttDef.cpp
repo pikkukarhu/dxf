@@ -52,6 +52,18 @@ string AttDef::to_json() {
     return s;
 }
 
+void AttDef::write_to_json_writer(rapidjson::Writer<rapidjson::StringBuffer>& writer) {
+	writer.StartObject();
+	writer.Key("ATTDEF");
+	writer.StartObject();
+	TextBase::write_to_json_writer(writer);
+	writer.Key("tag");               writer.String(this->tag_.c_str());
+	writer.Key("prompt");            writer.String(this->prompt_.c_str());
+	writer.Key("flags");             writer.Int(this->flags_);
+	writer.EndObject();
+	writer.EndObject();
+}
+
 void AttDef::to_svg(pugi::xml_node& svg_node) {
     pugi::xml_node text = svg_node.append_child("text");
     text.append_attribute("x").set_value(insertion_point_.x_);

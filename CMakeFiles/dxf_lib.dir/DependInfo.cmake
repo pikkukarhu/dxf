@@ -25,6 +25,7 @@ set(CMAKE_DEPENDS_DEPENDENCY_FILES
   "/home/hobbes/projects/cad-solution/dxf/src/entities/MText.cpp" "CMakeFiles/dxf_lib.dir/src/entities/MText.cpp.o" "gcc" "CMakeFiles/dxf_lib.dir/src/entities/MText.cpp.o.d"
   "/home/hobbes/projects/cad-solution/dxf/src/entities/Point.cpp" "CMakeFiles/dxf_lib.dir/src/entities/Point.cpp.o" "gcc" "CMakeFiles/dxf_lib.dir/src/entities/Point.cpp.o.d"
   "/home/hobbes/projects/cad-solution/dxf/src/entities/Text.cpp" "CMakeFiles/dxf_lib.dir/src/entities/Text.cpp.o" "gcc" "CMakeFiles/dxf_lib.dir/src/entities/Text.cpp.o.d"
+  "/home/hobbes/projects/cad-solution/dxf/src/entities/TextBase.cpp" "CMakeFiles/dxf_lib.dir/src/entities/TextBase.cpp.o" "gcc" "CMakeFiles/dxf_lib.dir/src/entities/TextBase.cpp.o.d"
   "/home/hobbes/projects/cad-solution/dxf/src/entries/Layer.cpp" "CMakeFiles/dxf_lib.dir/src/entries/Layer.cpp.o" "gcc" "CMakeFiles/dxf_lib.dir/src/entries/Layer.cpp.o.d"
   "/home/hobbes/projects/cad-solution/dxf/src/file/File.cpp" "CMakeFiles/dxf_lib.dir/src/file/File.cpp.o" "gcc" "CMakeFiles/dxf_lib.dir/src/file/File.cpp.o.d"
   "/home/hobbes/projects/cad-solution/dxf/src/tables/Table.cpp" "CMakeFiles/dxf_lib.dir/src/tables/Table.cpp.o" "gcc" "CMakeFiles/dxf_lib.dir/src/tables/Table.cpp.o.d"

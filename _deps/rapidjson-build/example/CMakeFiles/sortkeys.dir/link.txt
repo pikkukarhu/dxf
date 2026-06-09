@@ -1,0 +1,1 @@
+/usr/bin/c++  -march=native -Wall -Wextra -Werror -pthread -O2 -g -DNDEBUG -rdynamic -Wl,--dependency-file=CMakeFiles/sortkeys.dir/link.d CMakeFiles/sortkeys.dir/sortkeys/sortkeys.cpp.o -o ../../../bin/sortkeys

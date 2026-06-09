@@ -57,4 +57,14 @@ string TextBase::to_string() {
     return s;
 }
 
+void TextBase::write_to_json_writer(rapidjson::Writer<rapidjson::StringBuffer>& writer) {
+	Entity::write_to_json_writer(writer);
+	writer.Key("value");               writer.String(this->value_.c_str());
+	writer.Key("style_name");          writer.String(this->style_name_.c_str());
+	writer.Key("insertion_point");     this->insertion_point_.write_to_json_writer(writer);
+	writer.Key("height");              writer.Double(this->height_);
+	writer.Key("rotation");            writer.Double(this->rotation_);
+	writer.Key("extrusion_direction"); this->extrusion_direction_.write_to_json_writer(writer);
+}
+
 } /* namespace dxf */

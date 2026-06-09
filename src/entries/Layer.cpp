@@ -75,7 +75,27 @@ string Layer::toString() {
 }
 
 string Layer::toJson() {
-	return "{" + toString() + "}";
+	rapidjson::StringBuffer buffer;
+	rapidjson::Writer<rapidjson::StringBuffer> writer(buffer);
+	write_to_json_writer(writer);
+	return buffer.GetString();
+}
+
+void Layer::write_to_json_writer(rapidjson::Writer<rapidjson::StringBuffer>& writer) {
+	writer.StartObject();
+	writer.Key("layer");
+	writer.StartObject();
+	TableEntry::write_to_json_writer(writer);
+	writer.Key("layer_name");          writer.String(this->layerName_.c_str());
+	writer.Key("flags");               writer.Int(this->flags_);
+	writer.Key("color_number");        writer.Int(this->colorNumber_);
+	writer.Key("linetype_name");       writer.String(this->linetypeName_.c_str());
+	writer.Key("plotting_flag");       writer.Bool(this->plottingFlag_);
+	writer.Key("line_weight");         writer.Int(this->lineWeight_);
+	writer.Key("plot_style_pointer");  writer.String(this->plotStylePtr_.c_str());
+	writer.Key("material_pointer");    writer.String(this->materialPtr_.c_str());
+	writer.EndObject();
+	writer.EndObject();
 }
 
 } /* namespace dxf */

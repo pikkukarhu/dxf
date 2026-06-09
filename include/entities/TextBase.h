@@ -28,6 +28,7 @@ public:
     virtual ~TextBase() {}
 
     virtual string to_string() override;
+    virtual void write_to_json_writer(rapidjson::Writer<rapidjson::StringBuffer>& writer) override;
 };
 
 } /* namespace dxf */

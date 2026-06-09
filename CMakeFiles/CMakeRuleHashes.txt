@@ -27,3 +27,4 @@ b8d79ee341b17df73a60d978e5db0565 _deps/pugixml-build/CMakeFiles/NightlyMemoryChe
 dd830523a014ba19ae5d6850cbb578e1 _deps/pugixml-build/CMakeFiles/NightlySubmit
 f5c93f44f7ee252c1cb7dd09f9eaf15b _deps/pugixml-build/CMakeFiles/NightlyTest
 70fad97e859a4299626d0d27b36dce84 _deps/pugixml-build/CMakeFiles/NightlyUpdate
+9354916aa722991f3150eb553adef0e7 _deps/rapidjson-build/example/CMakeFiles/examples

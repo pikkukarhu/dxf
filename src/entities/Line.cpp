@@ -76,6 +76,17 @@ string Line::to_json() {
 	return s;
 }
 
+void Line::write_to_json_writer(rapidjson::Writer<rapidjson::StringBuffer>& writer) {
+	writer.StartObject();
+	writer.Key("line");
+	writer.StartObject();
+	Entity::write_to_json_writer(writer);
+	writer.Key("start_point"); this->start_.write_to_json_writer(writer);
+	writer.Key("end_point"); this->end_.write_to_json_writer(writer);
+	writer.EndObject();
+	writer.EndObject();
+}
+
 void Line::to_svg(pugi::xml_node& svg_node) {
 	//  <line x1="0" y1="80" x2="100" y2="20" stroke="black" />
 	pugi::xml_node line = svg_node.append_child("line");

@@ -102,15 +102,24 @@ void Document::export_svg(const std::string& file) {
 }
 
 void Document::export_json(const std::string& file) {
+	rapidjson::StringBuffer buffer;
+	rapidjson::Writer<rapidjson::StringBuffer> writer(buffer);
+
+	writer.StartObject();
+	writer.Key("tables");
+	tables_.write_to_json_writer(writer);
+	writer.Key("blocks");
+	blocks_.write_to_json_writer(writer);
+	writer.Key("entities");
+	entities_.write_to_json_writer(writer);
+	writer.EndObject();
 
 	std::ofstream outputFile(file);
-	// Check if the file is successfully opened
 	if (!outputFile.is_open()) {
 		std::cerr << "Error opening the file!" << std::endl;
 		return;
 	}
-	outputFile << "{ \"blocks\" : " << std::endl << blocks_.to_json() << ", " << std::endl;
-	outputFile << "{ \"entities\" : " << std::endl << entities_.to_json() << " }" << std::endl;
+	outputFile << buffer.GetString() << std::endl;
 	outputFile.close();
 }
 

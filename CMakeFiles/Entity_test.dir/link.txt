@@ -1,1 +1,1 @@
-/usr/bin/c++ -Wl,--dependency-file=CMakeFiles/Entity_test.dir/link.d CMakeFiles/Entity_test.dir/tests/document/Entity_test.cpp.o -o Entity_test  libdxf_lib.a _deps/pugixml-build/libpugixml.a
+/usr/bin/c++ -O2 -g -DNDEBUG -Wl,--dependency-file=CMakeFiles/Entity_test.dir/link.d CMakeFiles/Entity_test.dir/tests/document/Entity_test.cpp.o -o Entity_test  libdxf_lib.a _deps/pugixml-build/libpugixml.a

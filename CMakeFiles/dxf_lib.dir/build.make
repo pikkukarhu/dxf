@@ -310,10 +310,24 @@ CMakeFiles/dxf_lib.dir/src/entities/Text.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/dxf_lib.dir/src/entities/Text.cpp.s"
 	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/hobbes/projects/cad-solution/dxf/src/entities/Text.cpp -o CMakeFiles/dxf_lib.dir/src/entities/Text.cpp.s
 
+CMakeFiles/dxf_lib.dir/src/entities/TextBase.cpp.o: CMakeFiles/dxf_lib.dir/flags.make
+CMakeFiles/dxf_lib.dir/src/entities/TextBase.cpp.o: src/entities/TextBase.cpp
+CMakeFiles/dxf_lib.dir/src/entities/TextBase.cpp.o: CMakeFiles/dxf_lib.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/hobbes/projects/cad-solution/dxf/CMakeFiles --progress-num=$(CMAKE_PROGRESS_18) "Building CXX object CMakeFiles/dxf_lib.dir/src/entities/TextBase.cpp.o"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/dxf_lib.dir/src/entities/TextBase.cpp.o -MF CMakeFiles/dxf_lib.dir/src/entities/TextBase.cpp.o.d -o CMakeFiles/dxf_lib.dir/src/entities/TextBase.cpp.o -c /home/hobbes/projects/cad-solution/dxf/src/entities/TextBase.cpp
+
+CMakeFiles/dxf_lib.dir/src/entities/TextBase.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/dxf_lib.dir/src/entities/TextBase.cpp.i"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/hobbes/projects/cad-solution/dxf/src/entities/TextBase.cpp > CMakeFiles/dxf_lib.dir/src/entities/TextBase.cpp.i
+
+CMakeFiles/dxf_lib.dir/src/entities/TextBase.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/dxf_lib.dir/src/entities/TextBase.cpp.s"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/hobbes/projects/cad-solution/dxf/src/entities/TextBase.cpp -o CMakeFiles/dxf_lib.dir/src/entities/TextBase.cpp.s
+
 CMakeFiles/dxf_lib.dir/src/entries/Layer.cpp.o: CMakeFiles/dxf_lib.dir/flags.make
 CMakeFiles/dxf_lib.dir/src/entries/Layer.cpp.o: src/entries/Layer.cpp
 CMakeFiles/dxf_lib.dir/src/entries/Layer.cpp.o: CMakeFiles/dxf_lib.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/hobbes/projects/cad-solution/dxf/CMakeFiles --progress-num=$(CMAKE_PROGRESS_18) "Building CXX object CMakeFiles/dxf_lib.dir/src/entries/Layer.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/hobbes/projects/cad-solution/dxf/CMakeFiles --progress-num=$(CMAKE_PROGRESS_19) "Building CXX object CMakeFiles/dxf_lib.dir/src/entries/Layer.cpp.o"
 	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/dxf_lib.dir/src/entries/Layer.cpp.o -MF CMakeFiles/dxf_lib.dir/src/entries/Layer.cpp.o.d -o CMakeFiles/dxf_lib.dir/src/entries/Layer.cpp.o -c /home/hobbes/projects/cad-solution/dxf/src/entries/Layer.cpp
 
 CMakeFiles/dxf_lib.dir/src/entries/Layer.cpp.i: cmake_force
@@ -327,7 +341,7 @@ CMakeFiles/dxf_lib.dir/src/entries/Layer.cpp.s: cmake_force
 CMakeFiles/dxf_lib.dir/src/file/File.cpp.o: CMakeFiles/dxf_lib.dir/flags.make
 CMakeFiles/dxf_lib.dir/src/file/File.cpp.o: src/file/File.cpp
 CMakeFiles/dxf_lib.dir/src/file/File.cpp.o: CMakeFiles/dxf_lib.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/hobbes/projects/cad-solution/dxf/CMakeFiles --progress-num=$(CMAKE_PROGRESS_19) "Building CXX object CMakeFiles/dxf_lib.dir/src/file/File.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/hobbes/projects/cad-solution/dxf/CMakeFiles --progress-num=$(CMAKE_PROGRESS_20) "Building CXX object CMakeFiles/dxf_lib.dir/src/file/File.cpp.o"
 	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/dxf_lib.dir/src/file/File.cpp.o -MF CMakeFiles/dxf_lib.dir/src/file/File.cpp.o.d -o CMakeFiles/dxf_lib.dir/src/file/File.cpp.o -c /home/hobbes/projects/cad-solution/dxf/src/file/File.cpp
 
 CMakeFiles/dxf_lib.dir/src/file/File.cpp.i: cmake_force
@@ -341,7 +355,7 @@ CMakeFiles/dxf_lib.dir/src/file/File.cpp.s: cmake_force
 CMakeFiles/dxf_lib.dir/src/tables/Table.cpp.o: CMakeFiles/dxf_lib.dir/flags.make
 CMakeFiles/dxf_lib.dir/src/tables/Table.cpp.o: src/tables/Table.cpp
 CMakeFiles/dxf_lib.dir/src/tables/Table.cpp.o: CMakeFiles/dxf_lib.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/hobbes/projects/cad-solution/dxf/CMakeFiles --progress-num=$(CMAKE_PROGRESS_20) "Building CXX object CMakeFiles/dxf_lib.dir/src/tables/Table.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/hobbes/projects/cad-solution/dxf/CMakeFiles --progress-num=$(CMAKE_PROGRESS_21) "Building CXX object CMakeFiles/dxf_lib.dir/src/tables/Table.cpp.o"
 	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/dxf_lib.dir/src/tables/Table.cpp.o -MF CMakeFiles/dxf_lib.dir/src/tables/Table.cpp.o.d -o CMakeFiles/dxf_lib.dir/src/tables/Table.cpp.o -c /home/hobbes/projects/cad-solution/dxf/src/tables/Table.cpp
 
 CMakeFiles/dxf_lib.dir/src/tables/Table.cpp.i: cmake_force
@@ -355,7 +369,7 @@ CMakeFiles/dxf_lib.dir/src/tables/Table.cpp.s: cmake_force
 CMakeFiles/dxf_lib.dir/src/tables/TableEntry.cpp.o: CMakeFiles/dxf_lib.dir/flags.make
 CMakeFiles/dxf_lib.dir/src/tables/TableEntry.cpp.o: src/tables/TableEntry.cpp
 CMakeFiles/dxf_lib.dir/src/tables/TableEntry.cpp.o: CMakeFiles/dxf_lib.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/hobbes/projects/cad-solution/dxf/CMakeFiles --progress-num=$(CMAKE_PROGRESS_21) "Building CXX object CMakeFiles/dxf_lib.dir/src/tables/TableEntry.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/hobbes/projects/cad-solution/dxf/CMakeFiles --progress-num=$(CMAKE_PROGRESS_22) "Building CXX object CMakeFiles/dxf_lib.dir/src/tables/TableEntry.cpp.o"
 	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/dxf_lib.dir/src/tables/TableEntry.cpp.o -MF CMakeFiles/dxf_lib.dir/src/tables/TableEntry.cpp.o.d -o CMakeFiles/dxf_lib.dir/src/tables/TableEntry.cpp.o -c /home/hobbes/projects/cad-solution/dxf/src/tables/TableEntry.cpp
 
 CMakeFiles/dxf_lib.dir/src/tables/TableEntry.cpp.i: cmake_force
@@ -369,7 +383,7 @@ CMakeFiles/dxf_lib.dir/src/tables/TableEntry.cpp.s: cmake_force
 CMakeFiles/dxf_lib.dir/src/tables/TableFactory.cpp.o: CMakeFiles/dxf_lib.dir/flags.make
 CMakeFiles/dxf_lib.dir/src/tables/TableFactory.cpp.o: src/tables/TableFactory.cpp
 CMakeFiles/dxf_lib.dir/src/tables/TableFactory.cpp.o: CMakeFiles/dxf_lib.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/hobbes/projects/cad-solution/dxf/CMakeFiles --progress-num=$(CMAKE_PROGRESS_22) "Building CXX object CMakeFiles/dxf_lib.dir/src/tables/TableFactory.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/hobbes/projects/cad-solution/dxf/CMakeFiles --progress-num=$(CMAKE_PROGRESS_23) "Building CXX object CMakeFiles/dxf_lib.dir/src/tables/TableFactory.cpp.o"
 	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/dxf_lib.dir/src/tables/TableFactory.cpp.o -MF CMakeFiles/dxf_lib.dir/src/tables/TableFactory.cpp.o.d -o CMakeFiles/dxf_lib.dir/src/tables/TableFactory.cpp.o -c /home/hobbes/projects/cad-solution/dxf/src/tables/TableFactory.cpp
 
 CMakeFiles/dxf_lib.dir/src/tables/TableFactory.cpp.i: cmake_force
@@ -383,7 +397,7 @@ CMakeFiles/dxf_lib.dir/src/tables/TableFactory.cpp.s: cmake_force
 CMakeFiles/dxf_lib.dir/src/tables/Tables.cpp.o: CMakeFiles/dxf_lib.dir/flags.make
 CMakeFiles/dxf_lib.dir/src/tables/Tables.cpp.o: src/tables/Tables.cpp
 CMakeFiles/dxf_lib.dir/src/tables/Tables.cpp.o: CMakeFiles/dxf_lib.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/hobbes/projects/cad-solution/dxf/CMakeFiles --progress-num=$(CMAKE_PROGRESS_23) "Building CXX object CMakeFiles/dxf_lib.dir/src/tables/Tables.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/hobbes/projects/cad-solution/dxf/CMakeFiles --progress-num=$(CMAKE_PROGRESS_24) "Building CXX object CMakeFiles/dxf_lib.dir/src/tables/Tables.cpp.o"
 	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/dxf_lib.dir/src/tables/Tables.cpp.o -MF CMakeFiles/dxf_lib.dir/src/tables/Tables.cpp.o.d -o CMakeFiles/dxf_lib.dir/src/tables/Tables.cpp.o -c /home/hobbes/projects/cad-solution/dxf/src/tables/Tables.cpp
 
 CMakeFiles/dxf_lib.dir/src/tables/Tables.cpp.i: cmake_force
@@ -413,6 +427,7 @@ dxf_lib_OBJECTS = \
 "CMakeFiles/dxf_lib.dir/src/entities/MText.cpp.o" \
 "CMakeFiles/dxf_lib.dir/src/entities/Point.cpp.o" \
 "CMakeFiles/dxf_lib.dir/src/entities/Text.cpp.o" \
+"CMakeFiles/dxf_lib.dir/src/entities/TextBase.cpp.o" \
 "CMakeFiles/dxf_lib.dir/src/entries/Layer.cpp.o" \
 "CMakeFiles/dxf_lib.dir/src/file/File.cpp.o" \
 "CMakeFiles/dxf_lib.dir/src/tables/Table.cpp.o" \
@@ -440,6 +455,7 @@ libdxf_lib.a: CMakeFiles/dxf_lib.dir/src/entities/Line.cpp.o
 libdxf_lib.a: CMakeFiles/dxf_lib.dir/src/entities/MText.cpp.o
 libdxf_lib.a: CMakeFiles/dxf_lib.dir/src/entities/Point.cpp.o
 libdxf_lib.a: CMakeFiles/dxf_lib.dir/src/entities/Text.cpp.o
+libdxf_lib.a: CMakeFiles/dxf_lib.dir/src/entities/TextBase.cpp.o
 libdxf_lib.a: CMakeFiles/dxf_lib.dir/src/entries/Layer.cpp.o
 libdxf_lib.a: CMakeFiles/dxf_lib.dir/src/file/File.cpp.o
 libdxf_lib.a: CMakeFiles/dxf_lib.dir/src/tables/Table.cpp.o
@@ -448,7 +464,7 @@ libdxf_lib.a: CMakeFiles/dxf_lib.dir/src/tables/TableFactory.cpp.o
 libdxf_lib.a: CMakeFiles/dxf_lib.dir/src/tables/Tables.cpp.o
 libdxf_lib.a: CMakeFiles/dxf_lib.dir/build.make
 libdxf_lib.a: CMakeFiles/dxf_lib.dir/link.txt
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --bold --progress-dir=/home/hobbes/projects/cad-solution/dxf/CMakeFiles --progress-num=$(CMAKE_PROGRESS_24) "Linking CXX static library libdxf_lib.a"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --bold --progress-dir=/home/hobbes/projects/cad-solution/dxf/CMakeFiles --progress-num=$(CMAKE_PROGRESS_25) "Linking CXX static library libdxf_lib.a"
 	$(CMAKE_COMMAND) -P CMakeFiles/dxf_lib.dir/cmake_clean_target.cmake
 	$(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/dxf_lib.dir/link.txt --verbose=$(VERBOSE)
 

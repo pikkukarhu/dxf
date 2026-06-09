@@ -30,6 +30,7 @@ public:
 	virtual void read(File* f);
 
 	virtual std::string to_json();
+	virtual void write_to_json_writer(rapidjson::Writer<rapidjson::StringBuffer>& writer);
 };
 
 } /* namespace dxf */

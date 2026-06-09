@@ -12,6 +12,8 @@
 
 #include <string>
 #include <vector>
+#include <rapidjson/writer.h>
+#include <rapidjson/stringbuffer.h>
 
 #include "document/EntityFactory.h"
 #include "document/Entity.h"
@@ -76,6 +78,8 @@ public:
 
 	string toString();
 	string to_json();
+	void write_to_json_writer(rapidjson::Writer<rapidjson::StringBuffer>& writer);
+	void write_json_properties(rapidjson::Writer<rapidjson::StringBuffer>& writer);
 };
 
 } /* namespace dxf */

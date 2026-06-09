@@ -1,1 +1,1 @@
-/usr/bin/c++ -Wl,--dependency-file=CMakeFiles/Arc_test.dir/link.d CMakeFiles/Arc_test.dir/tests/entities/Arc_test.cpp.o -o Arc_test  libdxf_lib.a _deps/pugixml-build/libpugixml.a
+/usr/bin/c++ -O2 -g -DNDEBUG -Wl,--dependency-file=CMakeFiles/Arc_test.dir/link.d CMakeFiles/Arc_test.dir/tests/entities/Arc_test.cpp.o -o Arc_test  libdxf_lib.a _deps/pugixml-build/libpugixml.a

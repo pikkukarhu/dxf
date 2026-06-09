@@ -45,6 +45,17 @@ string Attrib::to_json() {
     return s;
 }
 
+void Attrib::write_to_json_writer(rapidjson::Writer<rapidjson::StringBuffer>& writer) {
+	writer.StartObject();
+	writer.Key("ATTRIB");
+	writer.StartObject();
+	TextBase::write_to_json_writer(writer);
+	writer.Key("tag");               writer.String(this->tag_.c_str());
+	writer.Key("flags");             writer.Int(this->flags_);
+	writer.EndObject();
+	writer.EndObject();
+}
+
 void Attrib::to_svg(pugi::xml_node& svg_node) {
     pugi::xml_node text = svg_node.append_child("text");
     text.append_attribute("x").set_value(insertion_point_.x_);

@@ -88,18 +88,20 @@ void Blocks::read(File* f) {
 }
 
 std::string Blocks::to_json() {
-	std::string jsonResult = "[";
-	for (size_t i = 0; i < blocks_.size(); ++i) {
-		jsonResult += blocks_[i]->to_json();
+	rapidjson::StringBuffer buffer;
+	rapidjson::Writer<rapidjson::StringBuffer> writer(buffer);
+	write_to_json_writer(writer);
+	return buffer.GetString();
+}
 
-		// Add a comma if it's not the last element
-		if (i < blocks_.size() - 1) {
-			jsonResult += ", ";
+void Blocks::write_to_json_writer(rapidjson::Writer<rapidjson::StringBuffer>& writer) {
+	writer.StartArray();
+	for (size_t i = 0; i < blocks_.size(); ++i) {
+		if (blocks_[i] != nullptr) {
+			blocks_[i]->write_to_json_writer(writer);
 		}
-		jsonResult += '\n';
 	}
-	jsonResult += "]";
-	return jsonResult;
+	writer.EndArray();
 }
 
 } /* namespace dxf */

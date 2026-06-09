@@ -52,4 +52,11 @@ string TableEntry::toString() {
 
 }
 
+void TableEntry::write_to_json_writer(rapidjson::Writer<rapidjson::StringBuffer>& writer) {
+	writer.Key("entry_type");      writer.String(this->entryType_.c_str());
+	writer.Key("handle");          writer.String(this->handle_.c_str());
+	writer.Key("owner_handle");    writer.String(this->ownerHandle_.c_str());
+	writer.Key("subclass_marker"); writer.String(this->subclassMarker_.c_str());
+}
+
 } /* namespace dxf */

@@ -12,6 +12,8 @@
 #include <vector>
 #include <string>
 #include <pugixml.hpp>
+#include <rapidjson/writer.h>
+#include <rapidjson/stringbuffer.h>
 
 #include "file/File.h"
 
@@ -87,6 +89,14 @@ public:
 				 "{\"x\" : " + std::to_string(x_) + ", "
 				+ "\"y\" : " + std::to_string(y_) + ", "
 				+ "\"z\" : " + std::to_string(z_) + "}"; }
+		
+		inline void write_to_json_writer(rapidjson::Writer<rapidjson::StringBuffer>& writer) {
+			writer.StartObject();
+			writer.Key("x"); writer.Double(x_);
+			writer.Key("y"); writer.Double(y_);
+			writer.Key("z"); writer.Double(z_);
+			writer.EndObject();
+		}
 	};
 
 	Entity(const std::vector<dxf::Group>&);
@@ -109,6 +119,7 @@ public:
 
 	virtual string to_string();
 	virtual string to_json() = 0;
+	virtual void write_to_json_writer(rapidjson::Writer<rapidjson::StringBuffer>& writer);
 	virtual void to_svg(pugi::xml_node& svgNode) = 0;
 };
 

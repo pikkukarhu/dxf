@@ -77,6 +77,18 @@ string MText::to_json() {
     return s;
 }
 
+void MText::write_to_json_writer(rapidjson::Writer<rapidjson::StringBuffer>& writer) {
+	writer.StartObject();
+	writer.Key("MTEXT");
+	writer.StartObject();
+	TextBase::write_to_json_writer(writer);
+	writer.Key("attachment_point"); writer.Int(static_cast<int>(this->attachment_point_));
+	writer.Key("drawing_direction"); writer.Int(static_cast<int>(this->drawing_direction_));
+	writer.Key("max_horizontal_width"); writer.Double(this->reference_rectangle_width_);
+	writer.EndObject();
+	writer.EndObject();
+}
+
 void MText::to_svg(pugi::xml_node& svg_node) {
     pugi::xml_node text = svg_node.append_child("text");
     text.append_attribute("x").set_value(insertion_point_.x_);

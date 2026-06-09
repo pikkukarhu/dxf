@@ -6,5 +6,5 @@ CXX_DEFINES =
 
 CXX_INCLUDES = -I/home/hobbes/projects/cad-solution/dxf/_deps/pugixml-src/src
 
-CXX_FLAGS = -std=gnu++17 -fPIC
+CXX_FLAGS = -O2 -g -DNDEBUG -std=gnu++17 -fPIC
 

@@ -62,6 +62,18 @@ string Text::to_json() {
     return s;
 }
 
+void Text::write_to_json_writer(rapidjson::Writer<rapidjson::StringBuffer>& writer) {
+	writer.StartObject();
+	writer.Key("TEXT");
+	writer.StartObject();
+	TextBase::write_to_json_writer(writer);
+	writer.Key("thickness");                writer.Double(this->thickness_);
+	writer.Key("horizontal_justification"); writer.Int(this->horizontal_justification_);
+	writer.Key("vertical_justification");   writer.Int(this->vertical_justification_);
+	writer.EndObject();
+	writer.EndObject();
+}
+
 void Text::to_svg(pugi::xml_node& svg_node) {
     pugi::xml_node text = svg_node.append_child("text");
     text.append_attribute("x").set_value(insertion_point_.x_);

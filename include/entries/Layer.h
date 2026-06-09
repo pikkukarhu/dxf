@@ -42,6 +42,7 @@ public:
 
 	virtual string toString();
 	virtual string toJson();
+	virtual void write_to_json_writer(rapidjson::Writer<rapidjson::StringBuffer>& writer) override;
 };
 
 } /* namespace dxf */

@@ -1,1 +1,1 @@
-/usr/bin/c++ -Wl,--dependency-file=CMakeFiles/Line_test.dir/link.d CMakeFiles/Line_test.dir/tests/entities/Line_test.cpp.o -o Line_test  libdxf_lib.a _deps/pugixml-build/libpugixml.a
+/usr/bin/c++ -O2 -g -DNDEBUG -Wl,--dependency-file=CMakeFiles/Line_test.dir/link.d CMakeFiles/Line_test.dir/tests/entities/Line_test.cpp.o -o Line_test  libdxf_lib.a _deps/pugixml-build/libpugixml.a

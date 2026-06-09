@@ -6,6 +6,7 @@
  */
 
 #include "blocks/Block.h"
+#include <rapidjson/writer.h>
 
 using std::to_string;
 
@@ -132,14 +133,50 @@ string Block::toString() {
 	return s;
 }
 
-string Block::to_json() {
-	string s = "{" + toString() + ", \"entities\" : [";
-	for (unsigned int i = 0; i <  this->entities_.size(); ++i) {
-		s += this->entities_[i]->to_json();
-	}
-	s += "]}";
-	return s;
+void Block::write_json_properties(rapidjson::Writer<rapidjson::StringBuffer>& writer) {
+    writer.Key("handle");          writer.String(this->handle_.c_str());
+    writer.Key("owner_handle");    writer.String(this->ownerHandle_.c_str());
+    writer.Key("subclass_marker"); writer.String(this->subclassMarker_.c_str());
+    writer.Key("block_begin");     writer.String(this->blockBegin_.c_str());
+    writer.Key("layer_name");      writer.String(this->layerName_.c_str());
+    writer.Key("block_name");      writer.String(this->blockName_.c_str());
+    writer.Key("block_type");      writer.Int(this->blockType_);
+
+    // Nested Object: No manual tracking of { or } or nested commas!
+    writer.Key("base_point");
+    writer.StartObject();
+    writer.Key("x");               writer.Double(this->basePoint_.x_);
+    writer.Key("y");               writer.Double(this->basePoint_.y_);
+    writer.Key("z");               writer.Double(this->basePoint_.z_);
+    writer.EndObject();
+
+    writer.Key("xref_path");       writer.String(this->xrefPath_.c_str());
+    writer.Key("description");     writer.String(this->description_.c_str());
+    writer.Key("block_end");       writer.String(this->blockEnd_.c_str());
 }
 
+
+void Block::write_to_json_writer(rapidjson::Writer<rapidjson::StringBuffer>& writer) {
+	writer.StartObject();
+	this->write_json_properties(writer);
+
+	writer.Key("entities");
+	writer.StartArray();
+	for (unsigned int i = 0; i < this->entities_.size(); ++i) {
+		if (this->entities_[i] != nullptr) {
+			this->entities_[i]->write_to_json_writer(writer);
+		}
+	}
+	writer.EndArray();
+
+	writer.EndObject();
+}
+
+string Block::to_json() {
+    rapidjson::StringBuffer buffer;
+    rapidjson::Writer<rapidjson::StringBuffer> writer(buffer);
+	this->write_to_json_writer(writer);
+    return buffer.GetString();
+}
 
 } /* namespace dxf */

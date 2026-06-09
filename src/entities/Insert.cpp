@@ -56,6 +56,19 @@ std::string Insert::to_json() {
     return s;
 }
 
+void Insert::write_to_json_writer(rapidjson::Writer<rapidjson::StringBuffer>& writer) {
+	writer.StartObject();
+	writer.Key("INSERT");
+	writer.StartObject();
+	Entity::write_to_json_writer(writer);
+	writer.Key("block_name");       writer.String(this->block_name.c_str());
+	writer.Key("insertion_point");  this->insertion_point_.write_to_json_writer(writer);
+	writer.Key("x_scale");          writer.Double(this->x_scale_);
+	writer.Key("y_scale");          writer.Double(this->y_scale_);
+	writer.EndObject();
+	writer.EndObject();
+}
+
 void Insert::to_svg(pugi::xml_node& svg_node) {
     pugi::xml_node use = svg_node.append_child("use");
     string href = "#" + block_name;

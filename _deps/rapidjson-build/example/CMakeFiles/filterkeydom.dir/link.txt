@@ -1,0 +1,1 @@
+/usr/bin/c++  -march=native -Wall -Wextra -Werror -pthread -O2 -g -DNDEBUG -rdynamic -Wl,--dependency-file=CMakeFiles/filterkeydom.dir/link.d CMakeFiles/filterkeydom.dir/filterkeydom/filterkeydom.cpp.o -o ../../../bin/filterkeydom

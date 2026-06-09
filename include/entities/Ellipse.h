@@ -44,6 +44,7 @@ public:
 	virtual ~Ellipse() {};
 
 	virtual string to_json();
+	virtual void write_to_json_writer(rapidjson::Writer<rapidjson::StringBuffer>& writer) override;
 	virtual void to_svg(pugi::xml_node& svg_node);
 };
 
