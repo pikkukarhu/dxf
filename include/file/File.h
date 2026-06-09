@@ -13,6 +13,7 @@
 #include <vector>
 #include <fstream>
 #include <string>
+#include <iconv.h>
 
 using std::vector;
 using std::string;
@@ -28,6 +29,8 @@ public:
 class File final {
 private:
 	std::ifstream* is_;
+	iconv_t cd_ = (iconv_t)-1;
+	string current_codepage_ = "UTF-8";
 
 public:
 	File(string fileName);
@@ -35,6 +38,9 @@ public:
 
 	std::istream& readGroup(std::istream& is, Group& g);
 	bool readGroup(Group& g);
+
+	void setCodepage(const string& codepage);
+	string toUtf8(const string& input);
 
 	// TODO test,remove later, document reads file.
 	int readFile();

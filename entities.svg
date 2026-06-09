@@ -1,2 +1,7 @@
 <?xml version="1.0"?>
-<svg width="1000" height="1000" xmlns="http://www.w3.org/2000/svg" />
+<svg width="1000" height="1000" xmlns="http://www.w3.org/2000/svg">
+	<text x="160" y="240" font-size="20">Kissa vieköön</text>
+	<text x="120" y="120" font-size="20" transform="rotate(-30.000000 120.000000 120.000000)">Kissa vieköön</text>
+	<text x="120" y="270" font-size="20" transform="rotate(-30.000000 120.000000 270.000000)">Kissa vieköön</text>
+	<text x="140" y="70" font-size="20">Kissa vieköön</text>
+</svg>

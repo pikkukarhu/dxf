@@ -32,6 +32,7 @@ private:
 	Tables tables_;
 	Blocks blocks_;
 
+	void readHeader(File* f);
 	void createEntity(const vector<string>& props);
 	Table* createTable(const vector<string>& props);
 

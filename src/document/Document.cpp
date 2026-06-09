@@ -47,7 +47,10 @@ Document::Document(string file) {
     		cout << g.value << " [" << endl;
 
     		section = g.value;
-    		if (section == "TABLES") {
+    		if (section == "HEADER") {
+    			this->readHeader(&f);
+    		}
+    		else if (section == "TABLES") {
     			this->tables_.read(&f);
     		}
     		else if (section == "ENTITIES") {
@@ -67,6 +70,21 @@ Document::Document(string file) {
 }
 
 Document::~Document() {
+}
+
+void Document::readHeader(File* f) {
+	Group g;
+	while (f->readGroup(g)) {
+		if (g.groupcode == 0 && g.value == "ENDSEC") {
+			cout << "] ENDSEC" << endl;
+			return;
+		}
+		if (g.groupcode == 9 && g.value == "$DWGCODEPAGE") {
+			if (f->readGroup(g)) {
+				f->setCodepage(g.value);
+			}
+		}
+	}
 }
 
 void Document::export_svg(const std::string& file) {

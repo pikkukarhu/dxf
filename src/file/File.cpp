@@ -13,6 +13,9 @@
 #include <fstream>
 #include <iostream>
 #include <sstream>
+#include <iconv.h>
+#include <errno.h>
+#include <string.h>
 
 
 using std::cout;
@@ -43,8 +46,60 @@ File::File(string fileName) {
 }
 
 File::~File() {
+	if (this->cd_ != (iconv_t)-1) {
+		iconv_close(this->cd_);
+	}
 	this->is_->close();
 	delete this->is_;
+}
+
+void File::setCodepage(const string& codepage) {
+	if (this->current_codepage_ == codepage) return;
+
+	if (this->cd_ != (iconv_t)-1) {
+		iconv_close(this->cd_);
+		this->cd_ = (iconv_t)-1;
+	}
+
+	this->current_codepage_ = codepage;
+	
+	string iconv_name = codepage;
+	if (codepage == "ANSI_1252") iconv_name = "CP1252";
+	else if (codepage == "ANSI_1251") iconv_name = "CP1251";
+	else if (codepage == "ANSI_1250") iconv_name = "CP1250";
+	// Add more mappings as needed
+
+	if (iconv_name != "UTF-8") {
+		this->cd_ = iconv_open("UTF-8", iconv_name.c_str());
+		if (this->cd_ == (iconv_t)-1) {
+			cerr << "Warning: Could not open iconv for codepage " << codepage << " (" << iconv_name << ")" << endl;
+		}
+	}
+}
+
+string File::toUtf8(const string& input) {
+	if (this->cd_ == (iconv_t)-1 || input.empty()) {
+		return input;
+	}
+
+	size_t in_bytes = input.length();
+	size_t out_bytes = in_bytes * 4; // UTF-8 can take up to 4 bytes per char
+	string output;
+	output.resize(out_bytes);
+
+	char* in_ptr = const_cast<char*>(input.c_str());
+	char* out_ptr = &output[0];
+
+	// Reset iconv state for new conversion
+	iconv(this->cd_, nullptr, nullptr, nullptr, nullptr);
+
+	if (iconv(this->cd_, &in_ptr, &in_bytes, &out_ptr, &out_bytes) == (size_t)-1) {
+		// If conversion fails, return original input as fallback
+		return input;
+	}
+
+	output.resize(output.length() - out_bytes);
+	return output;
 }
 
 std::istream& safeGetline(std::istream& is, std::string& t)     {
@@ -92,6 +147,7 @@ std::istream& File::readGroup(std::istream& is, Group& g) {
 		cerr << "Error convert group code [" << s << "] to integer!" << endl;
 	}
 	safeGetline(is, g.value);
+	g.value = toUtf8(g.value);
 	if (g.value == "EOF") {
 		is.setstate(std::ios::eofbit);
 	}
@@ -112,6 +168,7 @@ bool File::readGroup(Group& g) {
 		cerr << "Error convert group code [" << s << "] to integer!" << endl;
 	}
 	safeGetline(*this->is_, g.value);
+	g.value = toUtf8(g.value);
 	if (g.value == "EOF") {
 		this->is_->setstate(std::ios::eofbit);
 		return false;
