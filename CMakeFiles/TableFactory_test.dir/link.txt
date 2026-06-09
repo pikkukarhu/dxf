@@ -1,1 +1,0 @@
-/usr/bin/c++ -O2 -g -DNDEBUG -Wl,--dependency-file=CMakeFiles/TableFactory_test.dir/link.d CMakeFiles/TableFactory_test.dir/tests/tables/TableFactory_test.cpp.o -o TableFactory_test  libdxf_lib.a _deps/pugixml-build/libpugixml.a

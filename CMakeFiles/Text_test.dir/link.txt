@@ -1,1 +1,0 @@
-/usr/bin/c++ -O2 -g -DNDEBUG -Wl,--dependency-file=CMakeFiles/Text_test.dir/link.d CMakeFiles/Text_test.dir/tests/entities/Text_test.cpp.o -o Text_test  libdxf_lib.a _deps/pugixml-build/libpugixml.a

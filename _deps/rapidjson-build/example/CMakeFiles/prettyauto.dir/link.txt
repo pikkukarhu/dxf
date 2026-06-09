@@ -1,1 +1,0 @@
-/usr/bin/c++  -march=native -Wall -Wextra -Werror -pthread -O2 -g -DNDEBUG -rdynamic -Wl,--dependency-file=CMakeFiles/prettyauto.dir/link.d CMakeFiles/prettyauto.dir/prettyauto/prettyauto.cpp.o -o ../../../bin/prettyauto

@@ -40,3 +40,21 @@ dxf
 .project
 .cproject
 .settings/
+
+# CMake build artifacts
+CMakeCache.txt
+CMakeFiles/
+CMakeLists.txt.user
+Makefile
+cmake_install.cmake
+_deps/
+googletest/
+CTestTestfile.cmake
+
+# Output files
+entities.json
+entities.svg
+test_file.txt
+test_iconv.cpp
+test_iconv
+
