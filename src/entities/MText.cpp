@@ -36,6 +36,10 @@ MText::MText(const vector<Group> &properties) : TextBase(properties) {
             case 72:
                 this->drawing_direction_ = static_cast<DrawingDirection>(std::stoi(g.value));
                 break;
+            case 50:
+                // MTEXT group 50 is radians, convert to degrees for consistency in TextBase::rotation_
+                this->rotation_ = std::stod(g.value) * (180.0 / 3.14159265358979323846);
+                break;
             case 11:
                 this->x_axis_direction_vector_.x_ = std::stod(g.value);
                 break;
@@ -63,10 +67,30 @@ MText::MText(const vector<Group> &properties) : TextBase(properties) {
 }
 
 void MText::calc_bounding_box() {
-    this->bounding_box_.x = this->insertion_point_.x_;
-    this->bounding_box_.y = this->insertion_point_.y_;
-    this->bounding_box_.width = reference_rectangle_width_ > 0 ? reference_rectangle_width_ : (this->value_.length() * this->height_ * 0.5);
-    this->bounding_box_.heigth = this->height_ * 1.2;
+    double w = reference_rectangle_width_ > 0 ? reference_rectangle_width_ : (this->value_.length() * this->height_ * 0.5);
+    double h = this->height_ * 1.2; // Rough estimate for multiline
+    double rad = rotation_ * (3.14159265358979323846 / 180.0);
+    double cos_a = cos(rad);
+    double sin_a = sin(rad);
+
+    // Corners relative to insertion point (assuming hanging baseline for calculation)
+    double x_corners[4] = {0, w * cos_a, w * cos_a - h * sin_a, -h * sin_a};
+    double y_corners[4] = {0, w * sin_a, w * sin_a + h * cos_a, h * cos_a};
+
+    double min_x = x_corners[0], max_x = x_corners[0];
+    double min_y = y_corners[0], max_y = y_corners[0];
+
+    for (int i = 1; i < 4; ++i) {
+        if (x_corners[i] < min_x) min_x = x_corners[i];
+        if (x_corners[i] > max_x) max_x = x_corners[i];
+        if (y_corners[i] < min_y) min_y = y_corners[i];
+        if (y_corners[i] > max_y) max_y = y_corners[i];
+    }
+
+    this->bounding_box_.x = this->insertion_point_.x_ + min_x;
+    this->bounding_box_.y = this->insertion_point_.y_ + min_y;
+    this->bounding_box_.width = max_x - min_x;
+    this->bounding_box_.heigth = max_y - min_y;
 }
 
 string MText::to_json() {
@@ -94,7 +118,25 @@ void MText::to_svg(pugi::xml_node& svg_node) {
     text.append_attribute("x").set_value(insertion_point_.x_);
     text.append_attribute("y").set_value(insertion_point_.y_);
     text.append_attribute("font-size").set_value(height_);
+    text.append_attribute("dominant-baseline").set_value("hanging");
+    
+    if (rotation_ != 0.0) {
+        string transform = "rotate(" + std::to_string(-rotation_) + " " + std::to_string(insertion_point_.x_) + " " + std::to_string(insertion_point_.y_) + ")";
+        text.append_attribute("transform").set_value(transform.c_str());
+    }
+
+    // MText can have multiple lines separated by \P or other markers
+    // For now, we just put the raw string
     text.append_child(pugi::node_pcdata).set_value(value_.c_str());
+
+       // Add bounding box
+    auto rect = svg_node.append_child("rect");
+    rect.append_attribute("x").set_value(bounding_box_.x);
+    rect.append_attribute("y").set_value(bounding_box_.y);
+    rect.append_attribute("width").set_value(bounding_box_.width);;
+    rect.append_attribute("height").set_value(bounding_box_.heigth);
+    rect.append_attribute("fill").set_value("none");
+    rect.append_attribute("stroke").set_value("blue");
 }
 
 } /* namespace dxf */

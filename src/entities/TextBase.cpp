@@ -30,9 +30,6 @@ TextBase::TextBase(const vector<Group> &properties) : Entity(properties) {
             case 40:
                 this->height_ = std::stod(g.value);
                 break;
-            case 50:
-                this->rotation_ = std::stod(g.value);
-                break;
             case 210:
                 this->extrusion_direction_.x_ = std::stod(g.value);
                 break;

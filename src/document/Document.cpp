@@ -56,6 +56,7 @@ Document::Document(string file) {
     		else if (section == "ENTITIES") {
     			this->entities_.read(&f);
     			this->entities_.write_json("entities.json");
+				export_svg("entities.svg");
     		}
     		else if (section == "BLOCKS") {
     			this->blocks_.read(&f);
@@ -67,7 +68,6 @@ Document::Document(string file) {
     	}
     	//export_svg("entities.svg");
     }
-	export_svg("entities.svg");
 }
 
 Document::~Document() {
