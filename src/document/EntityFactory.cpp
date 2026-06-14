@@ -13,6 +13,7 @@
 #include "entities/Line.h"
 #include "entities/Point.h"
 #include "entities/Face3d.h"
+#include "entities/Circle.h"
 #include "entities/Arc.h"
 #include "entities/Ellipse.h"
 #include "entities/Text.h"
@@ -27,6 +28,7 @@ namespace dxf {
 inline Entity* createPoint(const vector<Group> &properties) { return new Point(properties); }
 inline Entity* createLine(const vector<Group> &properties) { return new Line(properties); }
 inline Entity* createFace3d(const vector<Group> &properties) { return new Face3d(properties); }
+inline Entity* createCircle(const vector<Group> &properties) { return new Circle(properties); }
 inline Entity* createArc(const vector<Group> &properties) { return new Arc(properties); }
 inline Entity* createEllipse(const vector<Group> &properties) { return new Ellipse(properties); }
 inline Entity* createText(const vector<Group> &properties) { return new Text(properties); }
@@ -41,6 +43,7 @@ EntityFactory::EntityFactory() {
 	this->factories_["LINE"] = createLine;
 	this->factories_["POINT"] = createPoint;
 	this->factories_["3DFACE"] = createFace3d;
+	this->factories_["CIRCLE"] = createCircle;
 	this->factories_["ARC"] = createArc;
 	this->factories_["ELLIPSE"] = createEllipse;
 	this->factories_["TEXT"] = createText;

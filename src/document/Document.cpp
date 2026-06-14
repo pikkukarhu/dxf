@@ -65,8 +65,9 @@ Document::Document(string file) {
     			sec.read(&f);
     		}
     	}
-    	export_svg("entities.svg");
+    	//export_svg("entities.svg");
     }
+	export_svg("entities.svg");
 }
 
 Document::~Document() {
