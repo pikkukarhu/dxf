@@ -66,7 +66,7 @@ public:
 
 	void initBlock(const vector<Group> &properties);
 	void finalizeBlock(const vector<Group> &properties);
-	void addEntity(const vector<Group> &properties);
+	Entity* addEntity(const vector<Group> &properties);
 
 	inline bool isAnonymous() { return this->blockType_ & ANONYMOUS_BLOCK; }
 	inline bool hasNonconstAttributes() { return this->blockType_ & HAS_NONCONSTANT_ATTRIBUTES; }

@@ -8,6 +8,7 @@
 #include "blocks/Blocks.h"
 #include <fstream>
 #include <iostream>
+#include "entities/Polyline.h"
 
 #define __UNKNOWN 0
 #define __BLOCK 1
@@ -34,6 +35,7 @@ void Blocks::read(File* f) {
 
     vector<Group> buffer;
     Block* currentBlock = nullptr;
+    Polyline* currentPolyline = nullptr;
     unsigned int paragraph = __UNKNOWN;
 
     Group g;
@@ -49,7 +51,19 @@ void Blocks::read(File* f) {
     			currentBlock->finalizeBlock(buffer);
     		}
     		else if (paragraph == __ENTITIES) {
-    			currentBlock->addEntity(buffer);
+                if (currentPolyline != nullptr) {
+                    if (buffer[0].value == "VERTEX") {
+                        currentPolyline->addVertex(buffer);
+                    }
+                    if (buffer[0].value == "SEQEND") {
+                        currentPolyline = nullptr;
+                    }
+                } else {
+    			    Entity* e = currentBlock->addEntity(buffer);
+                    if (buffer[0].value == "POLYLINE") {
+                        currentPolyline = dynamic_cast<Polyline*>(e);
+                    }
+                }
     		}
     		else {
     			// Do nothing, just dropped in

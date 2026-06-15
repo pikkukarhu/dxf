@@ -18,6 +18,7 @@
 
 #include "document/Entity.h"
 #include "document/EntityFactory.h"
+#include "entities/Polyline.h"
 
 using std::cout;
 using std::endl;
@@ -44,18 +45,30 @@ void Entities::read(File* f) {
 
 	vector<Group> entity;		// Buffer of one entitity lines
     Group g;
+    Polyline* currentPolyline = nullptr;
+
     while (f->readGroup(g)) {
 
     	if (g.groupcode == 0) {
 
     		if (entity.size() > 0) {
-    			Entity* e = ef.create(entity);
-    			if (e == nullptr) {
-    				cout << entity[0].value << endl;
-    			}
-    			else {
-    				this->entities_.push_back(e);
-    			}
+                if (currentPolyline != nullptr) {
+                    if (entity[0].value == "VERTEX") {
+                        currentPolyline->addVertex(entity);
+                    }
+                    // SEQEND will fall through to be checked below
+                } else {
+    			    Entity* e = ef.create(entity);
+    			    if (e == nullptr) {
+    				    cout << "Unknown entity: " << entity[0].value << endl;
+    			    }
+    			    else {
+    				    this->entities_.push_back(e);
+                        if (entity[0].value == "POLYLINE") {
+                            currentPolyline = dynamic_cast<Polyline*>(e);
+                        }
+    			    }
+                }
     		}
 
     		entity.clear();
@@ -63,6 +76,9 @@ void Entities::read(File* f) {
     			cout << "] {Entities} ENDSEC " << endl;
     			return;
     		}
+            if ( g.value == "SEQEND") {
+                currentPolyline = nullptr;
+            }
     	}
 
     	entity.push_back(g);

@@ -106,8 +106,12 @@ void Block::finalizeBlock(const vector<Group> &properties) {
 	}
 }
 
-void Block::addEntity(const vector<Group> &properties) {
-	this->entities_.push_back(this->entityFactor_.create(properties));
+Entity* Block::addEntity(const vector<Group> &properties) {
+	Entity* e = this->entityFactor_.create(properties);
+	if (e != nullptr) {
+		this->entities_.push_back(e);
+	}
+	return e;
 }
 
 string Block::toString() {
