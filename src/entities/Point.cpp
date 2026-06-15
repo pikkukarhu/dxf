@@ -102,6 +102,8 @@ void Point::to_svg(pugi::xml_node& svgNode) {
     // Set fill and color
     line.append_attribute("fill").set_value("none");
     line.append_attribute("stroke").set_value("black");
+
+    draw_bounding_box(svgNode);
 }
 
 } /* namespace dxf */

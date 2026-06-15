@@ -129,14 +129,7 @@ void MText::to_svg(pugi::xml_node& svg_node) {
     // For now, we just put the raw string
     text.append_child(pugi::node_pcdata).set_value(value_.c_str());
 
-       // Add bounding box
-    auto rect = svg_node.append_child("rect");
-    rect.append_attribute("x").set_value(bounding_box_.x);
-    rect.append_attribute("y").set_value(bounding_box_.y);
-    rect.append_attribute("width").set_value(bounding_box_.width);;
-    rect.append_attribute("height").set_value(bounding_box_.heigth);
-    rect.append_attribute("fill").set_value("none");
-    rect.append_attribute("stroke").set_value("blue");
+    draw_bounding_box(svg_node);
 }
 
 } /* namespace dxf */

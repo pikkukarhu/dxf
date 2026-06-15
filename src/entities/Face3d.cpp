@@ -96,6 +96,7 @@ void Face3d::write_to_json_writer(rapidjson::Writer<rapidjson::StringBuffer>& wr
 
 void Face3d::to_svg(pugi::xml_node& svg_node) {
 	svg_node.append_child(pugi::node_comment).set_value("FACE3D -not yet implemented");
+	draw_bounding_box(svg_node);
 }
 
 } /* namespace dxf */

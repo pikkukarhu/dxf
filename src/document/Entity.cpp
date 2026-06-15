@@ -17,6 +17,8 @@ using std::to_string;
 
 namespace dxf {
 
+bool Entity::show_bounding_box = false;
+
 Entity::Entity(const vector<Group> &properties) {
 
 	for (unsigned int i = 0; i < properties.size(); ++ i) {
@@ -185,6 +187,18 @@ void Entity::write_to_json_writer(rapidjson::Writer<rapidjson::StringBuffer>& wr
 	writer.Key("green");           writer.Int(this->rgb_.green);
 	writer.Key("blue");            writer.Int(this->rgb_.blue);
 	writer.EndObject();
+}
+
+void Entity::draw_bounding_box(pugi::xml_node& svg_node) {
+	if (!show_bounding_box) return;
+
+	auto rect = svg_node.append_child("rect");
+	rect.append_attribute("x").set_value(bounding_box_.x);
+	rect.append_attribute("y").set_value(bounding_box_.y);
+	rect.append_attribute("width").set_value(bounding_box_.width);
+	rect.append_attribute("height").set_value(bounding_box_.heigth);
+	rect.append_attribute("fill").set_value("none");
+	rect.append_attribute("stroke").set_value("blue");
 }
 
 } /* namespace dxf */

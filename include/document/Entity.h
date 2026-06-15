@@ -77,7 +77,10 @@ private:
 protected:							// 3 = Ignores shadows
 	Rect bounding_box_; 			// Bounding box of element
 	virtual void calc_bounding_box() = 0;
+	void draw_bounding_box(pugi::xml_node& svg_node);
 public:
+	static bool show_bounding_box;
+	static inline void setShowBoundingBox(bool show) { show_bounding_box = show; }
 
 	struct Point_ {
 		double x_;
