@@ -35,12 +35,11 @@ public:
 	virtual ~Face3d();
 
 	inline bool* invisibleEdges() {
-		static bool r[] = {
-			invisible_edges_ & __FIRST_EDGE_INVISIBLE,
-			invisible_edges_ & __SECOND_EDGE_INVISIBLE,
-			invisible_edges_ & __THIRD_EDGE_INVISIBLE,
-			invisible_edges_ & __FOURTH_EDGE_INVISIBLE
-		};
+		static bool r[4];
+		r[0] = (invisible_edges_ & __FIRST_EDGE_INVISIBLE) != 0;
+		r[1] = (invisible_edges_ & __SECOND_EDGE_INVISIBLE) != 0;
+		r[2] = (invisible_edges_ & __THIRD_EDGE_INVISIBLE) != 0;
+		r[3] = (invisible_edges_ & __FOURTH_EDGE_INVISIBLE) != 0;
 		return r;
 	}
 

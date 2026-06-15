@@ -16,6 +16,7 @@
 #include "entities/Circle.h"
 #include "entities/Arc.h"
 #include "entities/Ellipse.h"
+#include "entities/LWPolyline.h"
 #include "entities/Text.h"
 #include "entities/MText.h"
 #include "entities/Insert.h"
@@ -31,6 +32,7 @@ inline Entity* createFace3d(const vector<Group> &properties) { return new Face3d
 inline Entity* createCircle(const vector<Group> &properties) { return new Circle(properties); }
 inline Entity* createArc(const vector<Group> &properties) { return new Arc(properties); }
 inline Entity* createEllipse(const vector<Group> &properties) { return new Ellipse(properties); }
+inline Entity* createLWPolyline(const vector<Group> &properties) { return new LWPolyline(properties); }
 inline Entity* createText(const vector<Group> &properties) { return new Text(properties); }
 inline Entity* createMText(const vector<Group> &properties) { return new MText(properties); }
 inline Entity* createInsert(const vector<Group> &properties) { return new Insert(properties); }
@@ -46,6 +48,7 @@ EntityFactory::EntityFactory() {
 	this->factories_["CIRCLE"] = createCircle;
 	this->factories_["ARC"] = createArc;
 	this->factories_["ELLIPSE"] = createEllipse;
+	this->factories_["LWPOLYLINE"] = createLWPolyline;
 	this->factories_["TEXT"] = createText;
 	this->factories_["MTEXT"] = createMText;
 	this->factories_["INSERT"] = createInsert;
