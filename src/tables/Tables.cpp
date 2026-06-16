@@ -47,10 +47,11 @@ void Tables::read(File* f) {
 
     		if (g.value == "TABLE") {
     			tableHeader = true;
+                table.clear();
     		}
     		else if (g.value == "ENDTAB") { // table ready
 
-    			if (currentTable != nullptr) {
+    			if (currentTable != nullptr && !table.empty()) {
     				currentTable->createEntry(table);	// Add last entry to table
     			}
     			table.clear();						// Empty used buffer
@@ -60,15 +61,13 @@ void Tables::read(File* f) {
     		else {
 
     			if (tableHeader) {
-
+                    table.push_back(g); // Start of table properties (code 0)
     				currentTable = new Table(table);
     				this->tables_.push_back(currentTable);
-
     				cout << currentTable->toJson() << endl;
     			}
     			else {
-
-    				if (currentTable != nullptr) {
+    				if (currentTable != nullptr && !table.empty()) {
     					// Create entry, Add to currentTable
     					currentTable->createEntry(table);
     				}
@@ -79,7 +78,7 @@ void Tables::read(File* f) {
     		}
     	}
     	else {
-    		table.push_back(g);	// Add to data vector, used to create new object (Table or table entry) when next start or table ends.
+    		table.push_back(g);	// Add to data vector
     	}
     }
     cerr << "Unexpected end of file" << endl;
