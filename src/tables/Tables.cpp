@@ -85,6 +85,15 @@ void Tables::read(File* f) {
     cerr << "Unexpected end of file" << endl;
 }
 
+Table* Tables::getTable(const string& name) const {
+	for (auto table : this->tables_) {
+		if (table != nullptr && table->getName() == name) {
+			return table;
+		}
+	}
+	return nullptr;
+}
+
 void Tables::write_to_json_writer(rapidjson::Writer<rapidjson::StringBuffer>& writer) {
 	writer.StartArray();
 	for (size_t i = 0; i < tables_.size(); ++i) {

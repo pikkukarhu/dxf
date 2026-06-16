@@ -9,6 +9,10 @@
 #include <cstdint>
 
 #include "file/File.h"
+#include "tables/Tables.h"
+#include "tables/Table.h"
+#include "entries/Layer.h"
+#include "file/ACIConverter.h"
 
 
 using std::stoi;
@@ -171,6 +175,12 @@ string Entity::to_string() {
 	return s;
 }
 
+string Entity::get_svg_color() {
+	char hex[8];
+	sprintf(hex, "#%02x%02x%02x", resolved_rgb_.red, resolved_rgb_.green, resolved_rgb_.blue);
+	return string(hex);
+}
+
 
 void Entity::write_to_json_writer(rapidjson::Writer<rapidjson::StringBuffer>& writer) {
 	writer.Key("handle");          writer.String(this->handle_.c_str());
@@ -187,6 +197,16 @@ void Entity::write_to_json_writer(rapidjson::Writer<rapidjson::StringBuffer>& wr
 	writer.Key("green");           writer.Int(this->rgb_.green);
 	writer.Key("blue");            writer.Int(this->rgb_.blue);
 	writer.EndObject();
+
+	writer.Key("resolved_color_number"); writer.Int(this->resolved_color_);
+	writer.Key("resolved_linetype");     writer.String(this->resolved_linetype_.c_str());
+	writer.Key("resolved_line_weight");  writer.Int(this->resolved_line_weight_);
+	writer.Key("resolved_rgb");
+	writer.StartObject();
+	writer.Key("red");                   writer.Int(this->resolved_rgb_.red);
+	writer.Key("green");                 writer.Int(this->resolved_rgb_.green);
+	writer.Key("blue");                  writer.Int(this->resolved_rgb_.blue);
+	writer.EndObject();
 }
 
 void Entity::draw_bounding_box(pugi::xml_node& svg_node) {
@@ -199,6 +219,54 @@ void Entity::draw_bounding_box(pugi::xml_node& svg_node) {
 	rect.append_attribute("height").set_value(bounding_box_.heigth);
 	rect.append_attribute("fill").set_value("none");
 	rect.append_attribute("stroke").set_value("blue");
+}
+
+void Entity::resolve(const Tables& tables) {
+	// 1. Resolve Color
+	if (this->color_number_ == 256) { // BYLAYER
+		Table* layerTable = tables.getTable("LAYER");
+		if (layerTable != nullptr) {
+			Layer* layer = dynamic_cast<Layer*>(layerTable->getEntry(this->layer_));
+			if (layer != nullptr) {
+				this->resolved_color_ = layer->getColorNumber();
+			}
+		}
+	} else {
+		this->resolved_color_ = this->color_number_;
+	}
+
+	// 2. Resolve RGB
+	if (this->rgb_.red != 0 || this->rgb_.green != 0 || this->rgb_.blue != 0) {
+		this->resolved_rgb_ = this->rgb_;
+	} else {
+		this->resolved_rgb_ = ACIConverter::aciToRgb(this->resolved_color_);
+	}
+
+	// 3. Resolve Linetype
+	if (this->line_type_ == "BYLAYER") {
+		Table* layerTable = tables.getTable("LAYER");
+		if (layerTable != nullptr) {
+			Layer* layer = dynamic_cast<Layer*>(layerTable->getEntry(this->layer_));
+			if (layer != nullptr) {
+				this->resolved_linetype_ = layer->getLinetypeName();
+			}
+		}
+	} else {
+		this->resolved_linetype_ = this->line_type_;
+	}
+
+	// 4. Resolve Lineweight
+	if (this->line_weight_ == -1) { // BYLAYER (usually -1 in DXF for entities)
+		Table* layerTable = tables.getTable("LAYER");
+		if (layerTable != nullptr) {
+			Layer* layer = dynamic_cast<Layer*>(layerTable->getEntry(this->layer_));
+			if (layer != nullptr) {
+				this->resolved_line_weight_ = layer->getLineWeight();
+			}
+		}
+	} else {
+		this->resolved_line_weight_ = this->line_weight_;
+	}
 }
 
 } /* namespace dxf */

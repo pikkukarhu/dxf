@@ -63,6 +63,16 @@ string Table::toString() {
 	s +=   "\"subclass_marker\" : \"" + this->subclassMarker_ + "\"";
 	return s;
 }
+
+TableEntry* Table::getEntry(const string& name) const {
+	for (auto entry : this->entryes_) {
+		if (entry != nullptr && entry->getName() == name) {
+			return entry;
+		}
+	}
+	return nullptr;
+}
+
 string Table::toJson() {
 	rapidjson::StringBuffer buffer;
 	rapidjson::Writer<rapidjson::StringBuffer> writer(buffer);

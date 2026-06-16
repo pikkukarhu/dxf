@@ -85,6 +85,7 @@ void Attrib::to_svg(pugi::xml_node& svg_node) {
     text.append_attribute("y").set_value(insertion_point_.y_);
     text.append_attribute("font-size").set_value(height_);
     text.append_attribute("dominant-baseline").set_value("hanging");
+    text.append_attribute("fill").set_value(get_svg_color().c_str());
     text.append_child(pugi::node_pcdata).set_value(value_.c_str());
 
     if (rotation_ != 0.0) {

@@ -68,6 +68,10 @@ Document::Document(string file) {
     	}
     	//export_svg("entities.svg");
     }
+
+	// Resolve all properties (BYLAYER, etc.) after tables and entities are read
+	this->entities_.resolve(this->tables_);
+	this->blocks_.resolve(this->tables_);
 }
 
 Document::~Document() {

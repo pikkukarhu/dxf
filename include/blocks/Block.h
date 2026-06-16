@@ -76,6 +76,8 @@ public:
 	inline bool isResolvedXRer() { return this->blockType_ & RESOLVED_EXTERNAL_REF; }
 	inline bool referencedXRef() { return this->blockType_ & REFERENCED_EXTERNAL_REF; }
 
+	virtual void resolve(const Tables& tables);
+
 	string toString();
 	string to_json();
 	void write_to_json_writer(rapidjson::Writer<rapidjson::StringBuffer>& writer);

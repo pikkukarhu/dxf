@@ -141,7 +141,7 @@ void LWPolyline::to_svg(pugi::xml_node& svg_node) {
     
     path.append_attribute("d").set_value(d.c_str());
     path.append_attribute("fill").set_value("none");
-    path.append_attribute("stroke").set_value("black");
+    path.append_attribute("stroke").set_value(get_svg_color().c_str());
 
     draw_bounding_box(svg_node);
 }

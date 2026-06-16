@@ -22,6 +22,7 @@ using std::string;
 
 namespace dxf {
 
+class Tables;
 
 struct RGB {
 	unsigned char red;
@@ -76,6 +77,13 @@ private:
 									// 1 = Casts shadows							// 2 = Receives shadows
 protected:							// 3 = Ignores shadows
 	Rect bounding_box_; 			// Bounding box of element
+
+	// Resolved properties
+	int resolved_color_ = 0;
+	RGB resolved_rgb_ = {0, 0, 0};
+	string resolved_linetype_ = "CONTINUOUS";
+	int resolved_line_weight_ = -1;
+
 	virtual void calc_bounding_box() = 0;
 	void draw_bounding_box(pugi::xml_node& svg_node);
 public:
@@ -117,8 +125,13 @@ public:
 	inline double	get_linetype_scale() { return this->linetype_scale_;}
 	inline bool		is_visible() { return this->visible_;}
 	inline RGB		get_RGB() { return this->rgb_;}
+	inline RGB		get_resolved_RGB() { return this->resolved_rgb_; }
 	inline int		get_shadow_mode() { return this->shadow_mode_;}
 	inline Rect 	get_bounding_box() { return this->bounding_box_; };
+
+	string get_svg_color();
+
+	virtual void resolve(const Tables& tables);
 
 	virtual string to_string();
 	virtual string to_json() = 0;

@@ -44,8 +44,10 @@ public:
 	virtual ~Table();
 
 	inline string Type() { return this->objectType_; }
+	inline string getName() const { return this->tableName_; }
 	inline void createEntry(const vector<Group> &properties) { this->entryes_.push_back(this->tableFactory_.create(properties));};
 
+	TableEntry* getEntry(const string& name) const;
 	string toString();
 	string toJson();
 	void write_to_json_writer(rapidjson::Writer<rapidjson::StringBuffer>& writer);

@@ -101,6 +101,14 @@ void Blocks::read(File* f) {
     cerr << "Unexpected end of file" << endl;
 }
 
+void Blocks::resolve(const Tables& tables) {
+	for (size_t i = 0; i < blocks_.size(); ++i) {
+		if (blocks_[i] != nullptr) {
+			blocks_[i]->resolve(tables);
+		}
+	}
+}
+
 std::string Blocks::to_json() {
 	rapidjson::StringBuffer buffer;
 	rapidjson::Writer<rapidjson::StringBuffer> writer(buffer);

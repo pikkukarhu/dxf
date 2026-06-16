@@ -40,6 +40,11 @@ public:
 	Layer(const vector<Group> &properties);
 	virtual ~Layer();
 
+	virtual string getName() const override { return layerName_; }
+	inline int getColorNumber() const { return colorNumber_; }
+	inline string getLinetypeName() const { return linetypeName_; }
+	inline int getLineWeight() const { return lineWeight_; }
+
 	virtual string toString();
 	virtual string toJson();
 	virtual void write_to_json_writer(rapidjson::Writer<rapidjson::StringBuffer>& writer) override;

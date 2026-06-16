@@ -58,6 +58,7 @@ public:
 	TableEntry(const vector<dxf::Group> &properties);
 	virtual ~TableEntry();
 
+	virtual string getName() const { return ""; }
 	virtual string toString();
 	virtual string toJson() = 0;
 	virtual void write_to_json_writer(rapidjson::Writer<rapidjson::StringBuffer>& writer);

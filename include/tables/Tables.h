@@ -24,6 +24,7 @@ public:
 	virtual ~Tables();
 
 	virtual void read(File* f);
+	Table* getTable(const string& name) const;
 	void write_to_json_writer(rapidjson::Writer<rapidjson::StringBuffer>& writer);
 };
 

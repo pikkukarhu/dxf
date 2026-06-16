@@ -114,6 +114,14 @@ Entity* Block::addEntity(const vector<Group> &properties) {
 	return e;
 }
 
+void Block::resolve(const Tables& tables) {
+	for (unsigned int i = 0; i < this->entities_.size(); ++i) {
+		if (this->entities_[i] != nullptr) {
+			this->entities_[i]->resolve(tables);
+		}
+	}
+}
+
 string Block::toString() {
 	string s;
 

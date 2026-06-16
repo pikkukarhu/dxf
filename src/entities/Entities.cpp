@@ -86,6 +86,14 @@ void Entities::read(File* f) {
     cerr << "Unexpected end of file" << endl;
 }
 
+void Entities::resolve(const Tables& tables) {
+	for (size_t i = 0; i < entities_.size(); ++i) {
+		if (entities_[i] != nullptr) {
+			entities_[i]->resolve(tables);
+		}
+	}
+}
+
 std::string Entities::to_json() {
 	rapidjson::StringBuffer buffer;
 	rapidjson::Writer<rapidjson::StringBuffer> writer(buffer);
