@@ -214,7 +214,7 @@ void Ellipse::to_svg(pugi::xml_node& svg_node) {
 
     // Create a group element for rotation
     pugi::xml_node group = svg_node.append_child("g");
-   group.append_attribute("transform").set_value(("rotate(" + std::to_string(angle_deg) + " " + std::to_string(x) + " " + std::to_string(y) + ")").c_str());
+	group.append_attribute("transform").set_value(("rotate(" + std::to_string(angle_deg) + " " + std::to_string(x) + " " + std::to_string(y) + ")").c_str());
 
     // Create an ellipse element inside the group
     pugi::xml_node ellipse = group.append_child("ellipse");
