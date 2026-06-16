@@ -23,9 +23,14 @@ protected:
     double rotation_ = 0.0;
     Point_ extrusion_direction_ = {0.0, 0.0, 1.0};
 
+    // Resolved properties
+    string resolved_font_family_ = "Arial, sans-serif";
+
 public:
     TextBase(const vector<Group> &properties);
     virtual ~TextBase() {}
+
+    virtual void resolve(const Tables& tables) override;
 
     virtual string to_string() override;
     virtual void write_to_json_writer(rapidjson::Writer<rapidjson::StringBuffer>& writer) override;

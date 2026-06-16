@@ -98,6 +98,8 @@ void Document::export_svg(const std::string& file) {
 
 	svg.append_attribute("width").set_value("1000");
 	svg.append_attribute("height").set_value("1000");
+	svg.append_attribute("style").set_value("background-color: black");
+
 	svg.append_attribute("xmlns").set_value("http://www.w3.org/2000/svg");
 
 	    // Create a group element for rotation
