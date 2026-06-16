@@ -9,6 +9,7 @@
 
 #include <vector>
 #include "entries/Layer.h"
+#include "entries/LType.h"
 #include "file/File.h"
 
 using std::vector;
@@ -16,10 +17,12 @@ using std::vector;
 namespace dxf {
 
 inline TableEntry* createLayer(const vector<Group> &properties) { return new Layer(properties); }
+inline TableEntry* createLType(const vector<Group> &properties) { return new LType(properties); }
 
 
 TableFactory::TableFactory() {
 	this->factories_["LAYER"] = createLayer;
+	this->factories_["LTYPE"] = createLType;
 
 }
 
