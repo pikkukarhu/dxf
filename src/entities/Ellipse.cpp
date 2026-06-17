@@ -214,7 +214,10 @@ void Ellipse::to_svg(pugi::xml_node& svg_node) {
     ellipse.append_attribute("ry").set_value(b);
 
     ellipse.append_attribute("fill").set_value("none");
-    ellipse.append_attribute("stroke").set_value(get_svg_color().c_str());
+    string color = get_svg_color();
+    if (!color.empty()) {
+        ellipse.append_attribute("stroke").set_value(color.c_str());
+    }
 
     draw_bounding_box(svg_node);
 }

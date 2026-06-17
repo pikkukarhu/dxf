@@ -12,6 +12,9 @@
 
 #include <pugixml.hpp>
 
+#include <map>
+#include "entries/Layer.h"
+#include "file/ACIConverter.h"
 #include "EntityFactory.h"
 #include "file/File.h"
 #include "tables/Table.h"
@@ -142,13 +145,39 @@ void Document::export_svg(const std::string& file) {
 	svg.append_attribute("width").set_value("100%");
 	svg.append_attribute("height").set_value("100%");
     
-    string style = "background-color: " + string(is_black_background_ ? "black" : "white");
-	svg.append_attribute("style").set_value(style.c_str());
+    string style_attr = "background-color: " + string(is_black_background_ ? "black" : "white");
+	svg.append_attribute("style").set_value(style_attr.c_str());
 
 	svg.append_attribute("xmlns").set_value("http://www.w3.org/2000/svg");
 
-	    // Create a group element for rotation
-	entities_.to_svg(svg);
+    // Create groups for layers
+    std::map<string, pugi::xml_node> layer_groups;
+    Table* layerTable = tables_.getTable("LAYER");
+    if (layerTable != nullptr) {
+        for (auto entry : layerTable->getEntries()) {
+            Layer* l = dynamic_cast<Layer*>(entry);
+            if (l != nullptr) {
+                pugi::xml_node g = svg.append_child("g");
+                g.append_attribute("id").set_value(l->getName().c_str());
+                
+                RGB color = ACIConverter::aciToRgb(l->getColorNumber(), is_black_background_);
+                char hex[8];
+                sprintf(hex, "#%02x%02x%02x", color.red, color.green, color.blue);
+                g.append_attribute("stroke").set_value(hex);
+                g.append_attribute("fill").set_value(hex); // Set fill as well for text inheritance
+                
+                // AutoCAD lineweight is in hundredths of millimeters
+                if (l->getLineWeight() > 0) {
+                    double sw = l->getLineWeight() / 100.0;
+                    g.append_attribute("stroke-width").set_value(sw);
+                }
+
+                layer_groups[l->getName()] = g;
+            }
+        }
+    }
+
+	entities_.to_svg(svg, is_black_background_, layer_groups);
 	// Save the XML document to a file
 	doc.save_file(file.c_str());
 }

@@ -116,7 +116,10 @@ void Arc::to_svg(pugi::xml_node& svg_node) {
 
     // Set fill and color
     path.append_attribute("fill").set_value("none");
-    path.append_attribute("stroke").set_value(get_svg_color().c_str());
+    string color = get_svg_color();
+    if (!color.empty()) {
+        path.append_attribute("stroke").set_value(color.c_str());
+    }
 
     draw_bounding_box(svg_node);
 }

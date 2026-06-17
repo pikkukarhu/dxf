@@ -105,7 +105,10 @@ void Circle::to_svg(pugi::xml_node& svgNode) {
 	circle.append_attribute("cy").set_value(center_point_.y_);
 	circle.append_attribute("r").set_value(radius_);
 	circle.append_attribute("fill").set_value("none");
-	circle.append_attribute("stroke").set_value(get_svg_color().c_str());
+    string color = get_svg_color();
+    if (!color.empty()) {
+	    circle.append_attribute("stroke").set_value(color.c_str());
+    }
 
 	draw_bounding_box(svgNode);
 	}

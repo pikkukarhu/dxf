@@ -176,6 +176,9 @@ string Entity::to_string() {
 }
 
 string Entity::get_svg_color() {
+    if (this->color_number_ == 256) {
+        return ""; // Inherit from group
+    }
 	char hex[8];
 	sprintf(hex, "#%02x%02x%02x", resolved_rgb_.red, resolved_rgb_.green, resolved_rgb_.blue);
 	return string(hex);

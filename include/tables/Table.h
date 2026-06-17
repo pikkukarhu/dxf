@@ -47,6 +47,8 @@ public:
 	inline string getName() const { return this->tableName_; }
 	inline void createEntry(const vector<Group> &properties) { this->entryes_.push_back(this->tableFactory_.create(properties));};
 
+    inline const vector<TableEntry*>& getEntries() const { return this->entryes_; }
+
 	TableEntry* getEntry(const string& name) const;
 	string toString();
 	string toJson();

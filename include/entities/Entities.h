@@ -10,12 +10,11 @@
 #ifndef ENTITIES_ENTITIES_H_
 #define ENTITIES_ENTITIES_H_
 
-#include "document/Section.h"
-
-#include <vector>
+#include <map>
 #include <pugixml.hpp>
 
 #include "document/Entity.h"
+#include "document/Section.h"
 
 namespace dxf {
 
@@ -33,7 +32,7 @@ public:
 	virtual void write_to_json_writer(rapidjson::Writer<rapidjson::StringBuffer>& writer);
 	virtual void write_json(const std::string& file);
 
-	void to_svg(pugi::xml_node& svgNode);
+	void to_svg(pugi::xml_node& svgNode, bool isBlackBackground, std::map<string, pugi::xml_node>& layer_groups);
 	BoundingBox get_bounding_box() const;
 };
 
