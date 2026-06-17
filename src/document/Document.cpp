@@ -72,6 +72,16 @@ Document::Document(string file) {
 	// Resolve all properties (BYLAYER, etc.) after tables and entities are read
 	this->entities_.resolve(this->tables_);
 	this->blocks_.resolve(this->tables_);
+
+    // Update drawing extents
+    BoundingBox bb = entities_.get_bounding_box();
+    if (bb.initialized) {
+        min_x_ = bb.min_x;
+        max_x_ = bb.max_x;
+        min_y_ = bb.min_y;
+        max_y_ = bb.max_y;
+        bbox_initialized_ = true;
+    }
 }
 
 Document::~Document() {
@@ -79,14 +89,29 @@ Document::~Document() {
 
 void Document::readHeader(File* f) {
 	Group g;
+    string version = "";
+    bool utf8_forced = false;
+
 	while (f->readGroup(g)) {
 		if (g.groupcode == 0 && g.value == "ENDSEC") {
 			cout << "] ENDSEC" << endl;
 			return;
 		}
+        if (g.groupcode == 9 && g.value == "$ACADVER") {
+            if (f->readGroup(g)) {
+                version = g.value;
+                // AC1021 (R2007) and newer use UTF-8
+                if (version >= "AC1021") {
+                    f->setCodepage("UTF-8");
+                    utf8_forced = true;
+                }
+            }
+        }
 		if (g.groupcode == 9 && g.value == "$DWGCODEPAGE") {
 			if (f->readGroup(g)) {
-				f->setCodepage(g.value);
+                if (!utf8_forced) {
+				    f->setCodepage(g.value);
+                }
 			}
 		}
 	}
@@ -96,8 +121,26 @@ void Document::export_svg(const std::string& file) {
 	pugi::xml_document doc;
 	pugi::xml_node svg = doc.append_child("svg");
 
-	svg.append_attribute("width").set_value("1000");
-	svg.append_attribute("height").set_value("1000");
+    if (bbox_initialized_) {
+        double width = max_x_ - min_x_;
+        double height = max_y_ - min_y_;
+        
+        // Add 5% margin
+        double margin_x = width * 0.05;
+        double margin_y = height * 0.05;
+        if (width == 0) margin_x = 10;
+        if (height == 0) margin_y = 10;
+
+        string viewBox = std::to_string(min_x_ - margin_x) + " " + 
+                         std::to_string(min_y_ - margin_y) + " " + 
+                         std::to_string(width + 2 * margin_x) + " " + 
+                         std::to_string(height + 2 * margin_y);
+        
+        svg.append_attribute("viewBox").set_value(viewBox.c_str());
+    }
+
+	svg.append_attribute("width").set_value("100%");
+	svg.append_attribute("height").set_value("100%");
 	svg.append_attribute("style").set_value("background-color: black");
 
 	svg.append_attribute("xmlns").set_value("http://www.w3.org/2000/svg");

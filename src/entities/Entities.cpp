@@ -132,4 +132,14 @@ void Entities::to_svg(pugi::xml_node& svg_node) {
 	}
 }
 
+BoundingBox Entities::get_bounding_box() const {
+    BoundingBox bb;
+    for (Entity* e : entities_) {
+        if (e != nullptr) {
+            bb.combine(e->get_bounding_box().to_bounding_box());
+        }
+    }
+    return bb;
+}
+
 } /* namespace dxf */

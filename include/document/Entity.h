@@ -30,16 +30,43 @@ struct RGB {
 	unsigned char blue;
 };
 
+struct BoundingBox {
+    double min_x;
+    double min_y;
+    double max_x;
+    double max_y;
+    bool initialized;
+
+    inline BoundingBox() : min_x(0), min_y(0), max_x(0), max_y(0), initialized(false) {}
+
+    inline void update(double x, double y) {
+        if (!initialized) {
+            min_x = max_x = x;
+            min_y = max_y = y;
+            initialized = true;
+        } else {
+            if (x < min_x) min_x = x;
+            if (x > max_x) max_x = x;
+            if (y < min_y) min_y = y;
+            if (y > max_y) max_y = y;
+        }
+    }
+
+    inline void combine(const BoundingBox& other) {
+        if (!other.initialized) return;
+        update(other.min_x, other.min_y);
+        update(other.max_x, other.max_y);
+    }
+
+    inline double width() const { return max_x - min_x; }
+    inline double height() const { return max_y - min_y; }
+};
+
 struct Rect {
 	double x;
 	double y;
 	double width;
 	double heigth;
-	/*
-	double x_min;
-	double y_min;
-	double x_max;
-	double y_max;*/
 
 	inline Rect() {x = y = width = heigth = 0; }
 
@@ -48,11 +75,17 @@ struct Rect {
 		this->y = y;
 		this->width = width;
 		this->heigth = heigth;
-		/*
-		x_max = x1 < x2 ? x2 : x1;
-		y_min = y1 < y2 ? y1 : y2;
-		y_max = y1 < y2 ? y2 : y1;*/
 	}
+
+    inline BoundingBox to_bounding_box() const {
+        BoundingBox bb;
+        bb.min_x = x;
+        bb.min_y = y;
+        bb.max_x = x + width;
+        bb.max_y = y + heigth;
+        bb.initialized = true;
+        return bb;
+    }
 };
 
 class Entity {

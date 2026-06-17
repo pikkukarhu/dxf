@@ -32,6 +32,9 @@ private:
 	Tables tables_;
 	Blocks blocks_;
 
+    double min_x_ = 0, max_x_ = 0, min_y_ = 0, max_y_ = 0;
+    bool bbox_initialized_ = false;
+
 	void readHeader(File* f);
 	void createEntity(const vector<string>& props);
 	Table* createTable(const vector<string>& props);

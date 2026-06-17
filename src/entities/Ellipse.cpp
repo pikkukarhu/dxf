@@ -10,25 +10,11 @@
 
 namespace dxf {
 
-
-struct BoundingBox {
-    Entity::Point_ low;
-    Entity::Point_ high;
-    double width;
-    double height;
-};
-
 BoundingBox bounds(const Entity::Point_& point1, const Entity::Point_ point2) {
     BoundingBox result;
 
-    result.low.x_ = std::min(point1.x_, point2.x_);
-    result.low.y_ = std::min(point1.y_, point2.y_);
-
-    result.high.x_ = std::max(point1.x_, point2.x_);
-    result.high.y_ = std::max(point1.y_, point2.y_);
-
-    result.width = result.high.x_ - result.low.x_;
-    result.height = result.high.y_ - result.low.y_;
+    result.update(point1.x_, point1.y_);
+    result.update(point2.x_, point2.y_);
 
     return result;
 }
@@ -94,7 +80,9 @@ BoundingBox getBBox(const Entity::Point_& c, const Entity::Point_& end, double r
     Entity::Point_ cPlusE = {c.x_ + e.x_, c.y_ + e.y_};
 
     // Calculate bounding box
-    BoundingBox bbox{cMinusE, cPlusE, cPlusE.x_ - cMinusE.x_, cPlusE.y_ - cMinusE.y_};
+    BoundingBox bbox;
+    bbox.update(cMinusE.x_, cMinusE.y_);
+    bbox.update(cPlusE.x_, cPlusE.y_);
 
     return bbox;
 }
@@ -117,10 +105,10 @@ void Ellipse::calc_bounding_box() {
 	double rotation =  std::atan2(end_point_.y_,  end_point_.x_);
 	BoundingBox bb = getBBox(center_point_, end_point_, ratio_, rotation);
 
-	bounding_box_.x = bb.low.x_;
-	bounding_box_.y = bb.low.y_;
-	bounding_box_.width = bb.width;
-	bounding_box_.heigth = bb.height;
+	bounding_box_.x = bb.min_x;
+	bounding_box_.y = bb.min_y;
+	bounding_box_.width = bb.width();
+	bounding_box_.heigth = bb.height();
 }
 
 
@@ -179,7 +167,7 @@ Ellipse::Ellipse(const vector<Group> &properties)  :Entity(properties) {
 string Ellipse::to_json() {
 	string s;
 		s += "{\"ellipse\" : {";
-		s += to_string();
+		s += Entity::to_string();
 		s += ", \"center_point\" : " + this->center_point_.as_string();
 		s += ", \"end_point\" : " + this->end_point_.as_string();
 		s += ", \"start_angle\" : "  + std::to_string(this->start_angle_) + ", ";

@@ -34,6 +34,7 @@ public:
 	virtual void write_json(const std::string& file);
 
 	void to_svg(pugi::xml_node& svgNode);
+	BoundingBox get_bounding_box() const;
 };
 
 } /* namespace dxf */
