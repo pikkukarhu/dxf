@@ -34,13 +34,14 @@ private:
 
     double min_x_ = 0, max_x_ = 0, min_y_ = 0, max_y_ = 0;
     bool bbox_initialized_ = false;
+    bool is_black_background_ = true;
 
 	void readHeader(File* f);
 	void createEntity(const vector<string>& props);
 	Table* createTable(const vector<string>& props);
 
 public:
-	Document(string file);
+	Document(string file, bool isBlackBackground = true);
 	virtual ~Document();
 
 	void export_svg(const std::string& file);

@@ -24,7 +24,7 @@ using std::cerr;
 namespace dxf {
 
 
-Document::Document(string file) {
+Document::Document(string file, bool isBlackBackground) : is_black_background_(isBlackBackground) {
 	File f(file);
 
     bool sectionStart = false;
@@ -70,8 +70,8 @@ Document::Document(string file) {
     }
 
 	// Resolve all properties (BYLAYER, etc.) after tables and entities are read
-	this->entities_.resolve(this->tables_);
-	this->blocks_.resolve(this->tables_);
+	this->entities_.resolve(this->tables_, is_black_background_);
+	this->blocks_.resolve(this->tables_, is_black_background_);
 
     // Update drawing extents
     BoundingBox bb = entities_.get_bounding_box();
@@ -141,7 +141,9 @@ void Document::export_svg(const std::string& file) {
 
 	svg.append_attribute("width").set_value("100%");
 	svg.append_attribute("height").set_value("100%");
-	svg.append_attribute("style").set_value("background-color: black");
+    
+    string style = "background-color: " + string(is_black_background_ ? "black" : "white");
+	svg.append_attribute("style").set_value(style.c_str());
 
 	svg.append_attribute("xmlns").set_value("http://www.w3.org/2000/svg");
 

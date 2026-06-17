@@ -75,8 +75,8 @@ TextBase::TextBase(const vector<Group> &properties) : Entity(properties) {
     }
 }
 
-void TextBase::resolve(const Tables& tables) {
-    Entity::resolve(tables);
+void TextBase::resolve(const Tables& tables, bool isBlackBackground) {
+    Entity::resolve(tables, isBlackBackground);
 
     Table* styleTable = tables.getTable("STYLE");
     if (styleTable != nullptr) {

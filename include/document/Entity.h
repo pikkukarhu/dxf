@@ -164,7 +164,7 @@ public:
 
 	string get_svg_color();
 
-	virtual void resolve(const Tables& tables);
+	virtual void resolve(const Tables& tables, bool isBlackBackground = true);
 
 	virtual string to_string();
 	virtual string to_json() = 0;

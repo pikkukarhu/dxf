@@ -10,6 +10,7 @@ void print_usage(const char* progname) {
     std::cout << "Usage: " << progname << " [options] [input_file.dxf]\n"
               << "Options:\n"
               << "  -b, --bounding_box        Show bounding boxes in SVG output\n"
+              << "  -w, --white_background    Use white background for SVG (default: black)\n"
               << "  -s, --svg [filename]      Export to SVG (default: input_base.svg)\n"
               << "  -j, --json [filename]     Export to JSON (default: input_base.json)\n"
               << "  -B, --batch_folder <dir>  Process all .dxf files in the specified directory\n"
@@ -27,13 +28,13 @@ std::string get_output_filename(const std::string& input, const std::string& ext
     return (p.parent_path() / out_name).string();
 }
 
-void process_file(const std::string& input_file, bool show_bb, bool do_svg, bool do_json, 
+void process_file(const std::string& input_file, bool show_bb, bool white_bg, bool do_svg, bool do_json, 
                   const std::string& svg_user_name, const std::string& json_user_name, 
                   const std::string& dest_folder) {
     try {
         dxf::Entity::setShowBoundingBox(show_bb);
         std::cout << "Processing: " << input_file << std::endl;
-        dxf::Document d(input_file);
+        dxf::Document d(input_file, !white_bg);
 
         if (do_svg) {
             std::string svg_path = svg_user_name;
@@ -66,6 +67,7 @@ void process_file(const std::string& input_file, bool show_bb, bool do_svg, bool
 
 int main(int argc, char** argv) {
     bool show_bb = false;
+    bool white_bg = false;
     bool do_svg = false;
     bool do_json = false;
     std::string svg_file;
@@ -76,6 +78,7 @@ int main(int argc, char** argv) {
 
     static struct option long_options[] = {
         {"bounding_box",       no_argument,       0, 'b'},
+        {"white_background",   no_argument,       0, 'w'},
         {"svg",                optional_argument, 0, 's'},
         {"json",               optional_argument, 0, 'j'},
         {"batch_folder",       required_argument, 0, 'B'},
@@ -86,9 +89,10 @@ int main(int argc, char** argv) {
 
     int opt;
     int option_index = 0;
-    while ((opt = getopt_long(argc, argv, "bs::j::B:D:h", long_options, &option_index)) != -1) {
+    while ((opt = getopt_long(argc, argv, "bws::j::B:D:h", long_options, &option_index)) != -1) {
         switch (opt) {
             case 'b': show_bb = true; break;
+            case 'w': white_bg = true; break;
             case 's':
                 do_svg = true;
                 if (optarg) svg_file = optarg;
@@ -124,12 +128,12 @@ int main(int argc, char** argv) {
         }
         for (const auto& entry : fs::directory_iterator(batch_folder)) {
             if (entry.path().extension() == ".dxf") {
-                process_file(entry.path().string(), show_bb, do_svg, do_json, svg_file, json_file, dest_folder);
+                process_file(entry.path().string(), show_bb, white_bg, do_svg, do_json, svg_file, json_file, dest_folder);
             }
         }
     } else if (optind < argc) {
         input_file = argv[optind];
-        process_file(input_file, show_bb, do_svg, do_json, svg_file, json_file, dest_folder);
+        process_file(input_file, show_bb, white_bg, do_svg, do_json, svg_file, json_file, dest_folder);
     } else {
         std::cerr << "Error: Missing input filename or --batch_folder.\n";
         print_usage(argv[0]);

@@ -219,9 +219,11 @@ void Entity::draw_bounding_box(pugi::xml_node& svg_node) {
 	rect.append_attribute("height").set_value(bounding_box_.heigth);
 	rect.append_attribute("fill").set_value("none");
 	rect.append_attribute("stroke").set_value("blue");
+	rect.append_attribute("stroke-width").set_value("2px");
+	rect.append_attribute("vector-effect").set_value("non-scaling-stroke");
 }
 
-void Entity::resolve(const Tables& tables) {
+void Entity::resolve(const Tables& tables, bool isBlackBackground) {
 	// 1. Resolve Color
 	if (this->color_number_ == 256) { // BYLAYER
 		Table* layerTable = tables.getTable("LAYER");
@@ -239,7 +241,7 @@ void Entity::resolve(const Tables& tables) {
 	if (this->rgb_.red != 0 || this->rgb_.green != 0 || this->rgb_.blue != 0) {
 		this->resolved_rgb_ = this->rgb_;
 	} else {
-		this->resolved_rgb_ = ACIConverter::aciToRgb(this->resolved_color_);
+		this->resolved_rgb_ = ACIConverter::aciToRgb(this->resolved_color_, isBlackBackground);
 	}
 
 	// 3. Resolve Linetype

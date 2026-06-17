@@ -86,10 +86,10 @@ void Entities::read(File* f) {
     cerr << "Unexpected end of file" << endl;
 }
 
-void Entities::resolve(const Tables& tables) {
+void Entities::resolve(const Tables& tables, bool isBlackBackground) {
 	for (size_t i = 0; i < entities_.size(); ++i) {
 		if (entities_[i] != nullptr) {
-			entities_[i]->resolve(tables);
+			entities_[i]->resolve(tables, isBlackBackground);
 		}
 	}
 }

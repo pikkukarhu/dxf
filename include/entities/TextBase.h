@@ -30,7 +30,7 @@ public:
     TextBase(const vector<Group> &properties);
     virtual ~TextBase() {}
 
-    virtual void resolve(const Tables& tables) override;
+    virtual void resolve(const Tables& tables, bool isBlackBackground = true) override;
 
     virtual string to_string() override;
     virtual void write_to_json_writer(rapidjson::Writer<rapidjson::StringBuffer>& writer) override;

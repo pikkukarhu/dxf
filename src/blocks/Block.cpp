@@ -113,14 +113,15 @@ Entity* Block::addEntity(const vector<Group> &properties) {
 	}
 	return e;
 }
+void Block::resolve(const Tables& tables, bool isBlackBackground) {
 
-void Block::resolve(const Tables& tables) {
-	for (unsigned int i = 0; i < this->entities_.size(); ++i) {
+	for (size_t i = 0; i < this->entities_.size(); ++i) {
 		if (this->entities_[i] != nullptr) {
-			this->entities_[i]->resolve(tables);
+			this->entities_[i]->resolve(tables, isBlackBackground);
 		}
 	}
 }
+
 
 string Block::toString() {
 	string s;

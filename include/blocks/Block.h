@@ -76,7 +76,7 @@ public:
 	inline bool isResolvedXRer() { return this->blockType_ & RESOLVED_EXTERNAL_REF; }
 	inline bool referencedXRef() { return this->blockType_ & REFERENCED_EXTERNAL_REF; }
 
-	virtual void resolve(const Tables& tables);
+	virtual void resolve(const Tables& tables, bool isBlackBackground = true);
 
 	string toString();
 	string to_json();

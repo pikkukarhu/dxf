@@ -101,13 +101,15 @@ void Blocks::read(File* f) {
     cerr << "Unexpected end of file" << endl;
 }
 
-void Blocks::resolve(const Tables& tables) {
+void Blocks::resolve(const Tables& tables, bool isBlackBackground) {
+
 	for (size_t i = 0; i < blocks_.size(); ++i) {
 		if (blocks_[i] != nullptr) {
-			blocks_[i]->resolve(tables);
+			blocks_[i]->resolve(tables, isBlackBackground);
 		}
 	}
 }
+
 
 std::string Blocks::to_json() {
 	rapidjson::StringBuffer buffer;
