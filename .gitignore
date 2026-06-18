@@ -58,3 +58,6 @@ test_file.txt
 test_iconv.cpp
 test_iconv
 
+# Samples
+samples/
+
