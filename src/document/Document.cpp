@@ -9,6 +9,7 @@
 
 #include <fstream>
 #include <iostream>
+#include <cctype>
 
 #include <pugixml.hpp>
 
@@ -26,6 +27,18 @@ using std::cerr;
 
 namespace dxf {
 
+static string make_svg_reference_id(const string& value) {
+    string id;
+    for (char c : value) {
+        unsigned char uc = static_cast<unsigned char>(c);
+        if (std::isalnum(uc) || c == '_' || c == '-' || c == '.') {
+            id += c;
+        } else {
+            id += '_';
+        }
+    }
+    return id.empty() ? "layer" : id;
+}
 
 Document::Document(string file, bool isBlackBackground) : is_black_background_(isBlackBackground) {
 	File f(file);
@@ -150,34 +163,65 @@ void Document::export_svg(const std::string& file) {
 
 	svg.append_attribute("xmlns").set_value("http://www.w3.org/2000/svg");
 
-    // Create groups for layers
-    std::map<string, pugi::xml_node> layer_groups;
+    pugi::xml_node defs = svg.append_child("defs");
+    pugi::xml_node model_space = svg.append_child("g");
+    model_space.append_attribute("id").set_value("model__space");
+    model_space.append_attribute("display").set_value("inline");
+    pugi::xml_node paper_space = svg.append_child("g");
+    paper_space.append_attribute("id").set_value("paper_space");
+    paper_space.append_attribute("display").set_value("none");
+
+    // Create layer definitions and reference them from model/paper space groups.
+    std::map<string, Entities::SvgLayerGroups> layer_groups;
     Table* layerTable = tables_.getTable("LAYER");
     if (layerTable != nullptr) {
         for (auto entry : layerTable->getEntries()) {
             Layer* l = dynamic_cast<Layer*>(entry);
             if (l != nullptr) {
-                pugi::xml_node g = svg.append_child("g");
-                g.append_attribute("id").set_value(l->getName().c_str());
+                string layer_ref_id = make_svg_reference_id(l->getName());
+                string model_layer_id = layer_ref_id + "__model_space";
+                string paper_layer_id = layer_ref_id + "__paper_space";
+
+                pugi::xml_node layer = defs.append_child("g");
+                layer.append_attribute("id").set_value(l->getName().c_str());
+
+                pugi::xml_node model_layer = layer.append_child("g");
+                model_layer.append_attribute("id").set_value(model_layer_id.c_str());
+                model_layer.append_attribute("data-layer").set_value(l->getName().c_str());
+
+                pugi::xml_node paper_layer = layer.append_child("g");
+                paper_layer.append_attribute("id").set_value(paper_layer_id.c_str());
+                paper_layer.append_attribute("data-layer").set_value(l->getName().c_str());
                 
                 RGB color = ACIConverter::aciToRgb(l->getColorNumber(), is_black_background_);
                 char hex[8];
                 sprintf(hex, "#%02x%02x%02x", color.red, color.green, color.blue);
-                g.append_attribute("stroke").set_value(hex);
-                g.append_attribute("fill").set_value(hex); // Set fill as well for text inheritance
+                model_layer.append_attribute("stroke").set_value(hex);
+                model_layer.append_attribute("fill").set_value(hex); // Set fill as well for text inheritance
+                paper_layer.append_attribute("stroke").set_value(hex);
+                paper_layer.append_attribute("fill").set_value(hex);
                 
                 // AutoCAD lineweight is in hundredths of millimeters
                 if (l->getLineWeight() > 0) {
                     double sw = l->getLineWeight() / 100.0;
-                    g.append_attribute("stroke-width").set_value(sw);
+                    model_layer.append_attribute("stroke-width").set_value(sw);
+                    paper_layer.append_attribute("stroke-width").set_value(sw);
                 }
 
-                layer_groups[l->getName()] = g;
+                pugi::xml_node model_use = model_space.append_child("use");
+                string model_href = "#" + model_layer_id;
+                model_use.append_attribute("href").set_value(model_href.c_str());
+
+                pugi::xml_node paper_use = paper_space.append_child("use");
+                string paper_href = "#" + paper_layer_id;
+                paper_use.append_attribute("href").set_value(paper_href.c_str());
+
+                layer_groups[l->getName()] = {model_layer, paper_layer};
             }
         }
     }
 
-	entities_.to_svg(svg, is_black_background_, layer_groups);
+	entities_.to_svg(model_space, paper_space, is_black_background_, layer_groups);
 	// Save the XML document to a file
 	doc.save_file(file.c_str());
 }

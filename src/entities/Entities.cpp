@@ -123,15 +123,15 @@ void Entities::write_json(const std::string& file) {
 	outputFile.close();
 }
 
-void Entities::to_svg(pugi::xml_node& svg_node, bool isBlackBackground, std::map<string, pugi::xml_node>& layer_groups) {
+void Entities::to_svg(pugi::xml_node& model_space, pugi::xml_node& paper_space, bool isBlackBackground, std::map<string, SvgLayerGroups>& layer_groups) {
 
 	for (size_t i = 0; i < entities_.size(); ++i) {
 		if (entities_[i] != nullptr) {
             auto it = layer_groups.find(entities_[i]->get_layer());
             if (it != layer_groups.end()) {
-			    entities_[i]->to_svg(it->second);
+			    entities_[i]->to_svg(entities_[i]->is_modelspace() ? it->second.model_space : it->second.paper_space);
             } else {
-                entities_[i]->to_svg(svg_node);
+                entities_[i]->to_svg(entities_[i]->is_modelspace() ? model_space : paper_space);
             }
 		}
 	}

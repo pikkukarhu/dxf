@@ -23,6 +23,11 @@ private:
 	vector<Entity* > entities_;
 
 public:
+	struct SvgLayerGroups {
+		pugi::xml_node model_space;
+		pugi::xml_node paper_space;
+	};
+
 	Entities();
 	virtual ~Entities();
 
@@ -32,7 +37,7 @@ public:
 	virtual void write_to_json_writer(rapidjson::Writer<rapidjson::StringBuffer>& writer);
 	virtual void write_json(const std::string& file);
 
-	void to_svg(pugi::xml_node& svgNode, bool isBlackBackground, std::map<string, pugi::xml_node>& layer_groups);
+	void to_svg(pugi::xml_node& model_space, pugi::xml_node& paper_space, bool isBlackBackground, std::map<string, SvgLayerGroups>& layer_groups);
 	BoundingBox get_bounding_box() const;
 };
 

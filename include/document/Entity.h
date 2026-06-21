@@ -95,6 +95,8 @@ private:
 	 *  -- name better, can save to Json- file or document db as-is.virtual void to_svg(pugi::xml_node& svgNode);
 	 */
 	string	type_;					// Entity type name. Eg LINE, POINT, CIRCLE ...
+	int		id_;
+	string	readable_id_;
 	string	handle_;				// Entity handle
 	string	line_style_;			// Linestyle name;
 	string	subclass_marker_;		// Subclass marker (AcDbEntity) not omitted
@@ -119,8 +121,10 @@ protected:							// 3 = Ignores shadows
 
 	virtual void calc_bounding_box() = 0;
 	void draw_bounding_box(pugi::xml_node& svg_node);
+	void add_common_svg_attributes(pugi::xml_node& node);
 public:
 	static bool show_bounding_box;
+	static int next_entity_id;
 	static inline void setShowBoundingBox(bool show) { show_bounding_box = show; }
 
 	struct Point_ {
@@ -147,6 +151,8 @@ public:
 	virtual ~Entity();
 
 	inline string	get_type() { return this->type_;	}
+	inline int		get_id() { return this->id_; }
+	inline string	get_readable_id() { return this->readable_id_; }
 	inline string	get_handle() { return this->handle_;}
 	inline string	get_linestyle() { return this->line_style_;}
 	inline string	get_subclass_marker() { return this->subclass_marker_;}

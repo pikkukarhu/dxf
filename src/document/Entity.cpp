@@ -22,6 +22,7 @@ using std::to_string;
 namespace dxf {
 
 bool Entity::show_bounding_box = false;
+int Entity::next_entity_id = 1;
 
 Entity::Entity(const vector<Group> &properties) {
 
@@ -145,6 +146,8 @@ Entity::Entity(const vector<Group> &properties) {
 		}
 	} // For loop
 
+	this->id_ = Entity::next_entity_id++;
+	this->readable_id_ = this->type_ + "-" + std::to_string(this->id_);
 }
 
 Entity::~Entity() {
@@ -155,6 +158,8 @@ Entity::~Entity() {
 string Entity::to_string() {
 	string s;
 
+	s += "\"id\" : " + std::to_string(this->id_) + ", ";
+	s += "\"readable_id\" : \"" + this->readable_id_ + "\", ";
 	s += "\"handle\" : \"" + this->handle_ + "\", ";
 	s += "\"line_style\" : \"" + this->line_style_ + "\", ";
 	s += "\"subclass_marker\" : \"" + this->subclass_marker_ + "\", ";
@@ -186,6 +191,8 @@ string Entity::get_svg_color() {
 
 
 void Entity::write_to_json_writer(rapidjson::Writer<rapidjson::StringBuffer>& writer) {
+	writer.Key("id");              writer.Int(this->id_);
+	writer.Key("readable_id");     writer.String(this->readable_id_.c_str());
 	writer.Key("handle");          writer.String(this->handle_.c_str());
 	writer.Key("type");            writer.String(this->type_.c_str());
 	writer.Key("layer");           writer.String(this->layer_.c_str());
@@ -224,6 +231,21 @@ void Entity::draw_bounding_box(pugi::xml_node& svg_node) {
 	rect.append_attribute("stroke").set_value("blue");
 	rect.append_attribute("stroke-width").set_value("2px");
 	rect.append_attribute("vector-effect").set_value("non-scaling-stroke");
+}
+
+void Entity::add_common_svg_attributes(pugi::xml_node& node) {
+	node.append_attribute("id").set_value(this->readable_id_.c_str());
+	string color = get_svg_color();
+	if (string(node.name()) == "text") {
+		if (!color.empty()) {
+			node.append_attribute("fill").set_value(color.c_str());
+		}
+	} else {
+		node.append_attribute("fill").set_value("none");
+		if (!color.empty()) {
+			node.append_attribute("stroke").set_value(color.c_str());
+		}
+	}
 }
 
 void Entity::resolve(const Tables& tables, bool isBlackBackground) {
