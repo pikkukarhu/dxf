@@ -104,13 +104,9 @@ void Circle::to_svg(pugi::xml_node& svgNode) {
 	circle.append_attribute("cx").set_value(center_point_.x_);
 	circle.append_attribute("cy").set_value(center_point_.y_);
 	circle.append_attribute("r").set_value(radius_);
-	circle.append_attribute("fill").set_value("none");
-    string color = get_svg_color();
-    if (!color.empty()) {
-	    circle.append_attribute("stroke").set_value(color.c_str());
-    }
-
+	
+	add_common_svg_attributes(circle);
 	draw_bounding_box(svgNode);
-	}
+}
 
 } /* namespace dxf */

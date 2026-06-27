@@ -96,12 +96,7 @@ void Line::to_svg(pugi::xml_node& svg_node) {
     line.append_attribute("x2").set_value(end_.x_);
     line.append_attribute("y2").set_value(end_.y_);
 
-    // Set fill and color
-    line.append_attribute("fill").set_value("none");
-    string color = get_svg_color();
-    if (!color.empty()) {
-        line.append_attribute("stroke").set_value(color.c_str());
-    }
+    add_common_svg_attributes(line);
 
     draw_bounding_box(svg_node);
 }

@@ -76,6 +76,8 @@ void Insert::to_svg(pugi::xml_node& svg_node) {
     use.append_attribute("x").set_value(insertion_point_.x_);
     use.append_attribute("y").set_value(insertion_point_.y_);
     
+    add_common_svg_attributes(use);
+    
     if (x_scale_ != 1.0 || y_scale_ != 1.0) {
         string transform = "scale(" + std::to_string(x_scale_) + " " + std::to_string(y_scale_) + ")";
         use.append_attribute("transform").set_value(transform.c_str());

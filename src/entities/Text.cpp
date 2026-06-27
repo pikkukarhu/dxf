@@ -105,16 +105,9 @@ void Text::to_svg(pugi::xml_node& svg_node) {
     text.append_attribute("font-size").set_value(height_);
     text.append_attribute("font-family").set_value(resolved_font_family_.c_str());
     text.append_attribute("dominant-baseline").set_value("hanging");
-    string color = get_svg_color();
-    if (!color.empty()) {
-        text.append_attribute("fill").set_value(color.c_str());
-    } else {
-        // SVG text inherits fill from parent group's stroke? No, usually fill.
-        // But in CAD drawings, text usually takes the layer color.
-        // We'll set fill="currentColor" or handle it via CSS.
-        // Actually, if we set stroke on group, we should probably set fill on group too for text.
-        // Or just inherit.
-    }
+    
+    add_common_svg_attributes(text);
+
     text.append_child(pugi::node_pcdata).set_value(value_.c_str());
     
     if (rotation_ != 0.0) {

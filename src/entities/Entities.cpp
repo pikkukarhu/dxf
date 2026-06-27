@@ -123,15 +123,30 @@ void Entities::write_json(const std::string& file) {
 	outputFile.close();
 }
 
-void Entities::to_svg(pugi::xml_node& model_space, pugi::xml_node& paper_space, bool isBlackBackground, std::map<string, SvgLayerGroups>& layer_groups) {
+void Entities::to_svg(pugi::xml_node& model_space, /*, pugi::xml_node& paper_space, */bool isBlackBackground, std::map<string, pugi::xml_node> & layer_groups) {
+	BoundingBox bb = get_bounding_box();
+	double width = bb.width();
+	double height = bb.height();
 
+	/*
+	    // 2. Shift the viewBox Y origin to negative height
+    std::string viewbox_val = "0 -" + std::to_string(bb.height()) + " " 
+                            + std::to_string(bb.width());
+
+    svg.append_attribute("viewBox").set_value(viewbox_val.c_str());
+	*/
 	for (size_t i = 0; i < entities_.size(); ++i) {
 		if (entities_[i] != nullptr) {
+			if (!entities_[i]->is_modelspace()) {
+				continue; // Skip paper space entities for now
+			}
             auto it = layer_groups.find(entities_[i]->get_layer());
             if (it != layer_groups.end()) {
-			    entities_[i]->to_svg(entities_[i]->is_modelspace() ? it->second.model_space : it->second.paper_space);
-            } else {
-                entities_[i]->to_svg(entities_[i]->is_modelspace() ? model_space : paper_space);
+
+			    entities_[i]->to_svg( it->second);
+            } 
+			else {
+                entities_[i]->to_svg(model_space);
             }
 		}
 	}

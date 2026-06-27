@@ -107,19 +107,14 @@ void Arc::to_svg(pugi::xml_node& svg_node) {
     double start_x = center_point_.x_  + radius_ * cos(start_angle_ * M_PI / 180.0);
     double start_y = center_point_.y_  + radius_ * sin(start_angle_ * M_PI / 180.0);
     double end_x = center_point_.x_  + radius_ * cos(end_angle_ * M_PI / 180.0);
-    double end_y = center_point_.x_  + radius_ * sin(end_angle_ * M_PI / 180.0);
+    double end_y = center_point_.y_  + radius_ * sin(end_angle_ * M_PI / 180.0);
 
     // Append control points to path
     char path_data[100];
     sprintf(path_data, "M%f %f A %f %f, 0, 0, 1, %f %f", start_x, start_y, radius_, radius_, end_x, end_y);
     path.append_attribute("d").set_value(path_data);
 
-    // Set fill and color
-    path.append_attribute("fill").set_value("none");
-    string color = get_svg_color();
-    if (!color.empty()) {
-        path.append_attribute("stroke").set_value(color.c_str());
-    }
+    add_common_svg_attributes(path);
 
     draw_bounding_box(svg_node);
 }

@@ -99,9 +99,7 @@ void Point::to_svg(pugi::xml_node& svgNode) {
     line.append_attribute("x2").set_value(pt_.x_);
     line.append_attribute("y2").set_value(pt_.y_);
 
-    // Set fill and color
-    line.append_attribute("fill").set_value("none");
-    line.append_attribute("stroke").set_value("black");
+    add_common_svg_attributes(line);
 
     draw_bounding_box(svgNode);
 }

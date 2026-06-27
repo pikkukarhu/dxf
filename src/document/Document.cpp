@@ -9,7 +9,6 @@
 
 #include <fstream>
 #include <iostream>
-#include <cctype>
 
 #include <pugixml.hpp>
 
@@ -27,18 +26,6 @@ using std::cerr;
 
 namespace dxf {
 
-static string make_svg_reference_id(const string& value) {
-    string id;
-    for (char c : value) {
-        unsigned char uc = static_cast<unsigned char>(c);
-        if (std::isalnum(uc) || c == '_' || c == '-' || c == '.') {
-            id += c;
-        } else {
-            id += '_';
-        }
-    }
-    return id.empty() ? "layer" : id;
-}
 
 Document::Document(string file, bool isBlackBackground) : is_black_background_(isBlackBackground) {
 	File f(file);
@@ -108,6 +95,7 @@ void Document::readHeader(File* f) {
     string version = "";
     bool utf8_forced = false;
 
+	
 	while (f->readGroup(g)) {
 		if (g.groupcode == 0 && g.value == "ENDSEC") {
 			cout << "] ENDSEC" << endl;
@@ -137,91 +125,69 @@ void Document::export_svg(const std::string& file) {
 	pugi::xml_document doc;
 	pugi::xml_node svg = doc.append_child("svg");
 
-    if (bbox_initialized_) {
-        double width = max_x_ - min_x_;
-        double height = max_y_ - min_y_;
-        
-        // Add 5% margin
-        double margin_x = width * 0.05;
-        double margin_y = height * 0.05;
-        if (width == 0) margin_x = 10;
-        if (height == 0) margin_y = 10;
+	BoundingBox bb = entities_.get_bounding_box();
 
-        string viewBox = std::to_string(min_x_ - margin_x) + " " + 
-                         std::to_string(min_y_ - margin_y) + " " + 
-                         std::to_string(width + 2 * margin_x) + " " + 
-                         std::to_string(height + 2 * margin_y);
+    //if (bbox_initialized_) {
+    double width = bb.width();
+    double height = bb.height();
         
-        svg.append_attribute("viewBox").set_value(viewBox.c_str());
-    }
+	min_x_ = bb.min_x;
+	min_y_ = bb.min_y;
+
+    // Add 5% margin
+    double margin_x = width == 0 ? 10 : width * 0.05;
+    double margin_y = height == 0 ? 10 : height * 0.05;
+
+
+    string viewBox = std::to_string(min_x_ - margin_x) + " " + 
+                    std::to_string((min_y_ - margin_y)/*- height*/) + " " + 
+                    std::to_string(width + 2 * margin_x) + " " + 
+                    std::to_string(height + 2 * margin_y);
+        
+    svg.append_attribute("viewBox").set_value(viewBox.c_str());
+	svg.append_attribute("transform").set_value("scale(1, -1)");
 
 	svg.append_attribute("width").set_value("100%");
 	svg.append_attribute("height").set_value("100%");
     
+	// Flip Y axis to match DXF coordinate system
+	// Check if we show paper-space or model-space entities, and select bounding box accordingly 
+	// FIXME first we do only modelspace, so we can use overall bounding box, but if we want to support paperspace, 
+	//we need to calculate bounding box for each separately and flip only modelspace
+
     string style_attr = "background-color: " + string(is_black_background_ ? "black" : "white");
 	svg.append_attribute("style").set_value(style_attr.c_str());
 
 	svg.append_attribute("xmlns").set_value("http://www.w3.org/2000/svg");
 
-    pugi::xml_node defs = svg.append_child("defs");
-    pugi::xml_node model_space = svg.append_child("g");
-    model_space.append_attribute("id").set_value("model__space");
-    model_space.append_attribute("display").set_value("inline");
-    pugi::xml_node paper_space = svg.append_child("g");
-    paper_space.append_attribute("id").set_value("paper_space");
-    paper_space.append_attribute("display").set_value("none");
-
-    // Create layer definitions and reference them from model/paper space groups.
-    std::map<string, Entities::SvgLayerGroups> layer_groups;
+    // Create groups for layers
+    std::map<string, pugi::xml_node> layer_groups;
     Table* layerTable = tables_.getTable("LAYER");
     if (layerTable != nullptr) {
         for (auto entry : layerTable->getEntries()) {
             Layer* l = dynamic_cast<Layer*>(entry);
             if (l != nullptr) {
-                string layer_ref_id = make_svg_reference_id(l->getName());
-                string model_layer_id = layer_ref_id + "__model_space";
-                string paper_layer_id = layer_ref_id + "__paper_space";
-
-                pugi::xml_node layer = defs.append_child("g");
-                layer.append_attribute("id").set_value(l->getName().c_str());
-
-                pugi::xml_node model_layer = layer.append_child("g");
-                model_layer.append_attribute("id").set_value(model_layer_id.c_str());
-                model_layer.append_attribute("data-layer").set_value(l->getName().c_str());
-
-                pugi::xml_node paper_layer = layer.append_child("g");
-                paper_layer.append_attribute("id").set_value(paper_layer_id.c_str());
-                paper_layer.append_attribute("data-layer").set_value(l->getName().c_str());
+                pugi::xml_node g = svg.append_child("g");
+                g.append_attribute("id").set_value(l->getName().c_str());
                 
                 RGB color = ACIConverter::aciToRgb(l->getColorNumber(), is_black_background_);
                 char hex[8];
                 sprintf(hex, "#%02x%02x%02x", color.red, color.green, color.blue);
-                model_layer.append_attribute("stroke").set_value(hex);
-                model_layer.append_attribute("fill").set_value(hex); // Set fill as well for text inheritance
-                paper_layer.append_attribute("stroke").set_value(hex);
-                paper_layer.append_attribute("fill").set_value(hex);
+                g.append_attribute("stroke").set_value(hex);
+                g.append_attribute("fill").set_value(hex); // Set fill as well for text inheritance
                 
                 // AutoCAD lineweight is in hundredths of millimeters
                 if (l->getLineWeight() > 0) {
                     double sw = l->getLineWeight() / 100.0;
-                    model_layer.append_attribute("stroke-width").set_value(sw);
-                    paper_layer.append_attribute("stroke-width").set_value(sw);
+                    g.append_attribute("stroke-width").set_value(sw);
                 }
 
-                pugi::xml_node model_use = model_space.append_child("use");
-                string model_href = "#" + model_layer_id;
-                model_use.append_attribute("href").set_value(model_href.c_str());
-
-                pugi::xml_node paper_use = paper_space.append_child("use");
-                string paper_href = "#" + paper_layer_id;
-                paper_use.append_attribute("href").set_value(paper_href.c_str());
-
-                layer_groups[l->getName()] = {model_layer, paper_layer};
+                layer_groups[l->getName()] = g;
             }
         }
     }
 
-	entities_.to_svg(model_space, paper_space, is_black_background_, layer_groups);
+	entities_.to_svg(svg, is_black_background_, layer_groups);
 	// Save the XML document to a file
 	doc.save_file(file.c_str());
 }

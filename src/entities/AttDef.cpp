@@ -93,9 +93,12 @@ void AttDef::to_svg(pugi::xml_node& svg_node) {
     text.append_attribute("y").set_value(insertion_point_.y_);
     text.append_attribute("font-size").set_value(height_);
     text.append_attribute("dominant-baseline").set_value("hanging");
-    string color = get_svg_color();
-    if (color == "#000000") color = "gray"; // Keep distinct look for AttDef if default
-    text.append_attribute("fill").set_value(color.c_str());
+    
+    add_common_svg_attributes(text);
+    if (std::string(text.attribute("fill").value()) == "#000000") {
+        text.attribute("fill").set_value("gray");
+    }
+    
     text.append_child(pugi::node_pcdata).set_value(tag_.c_str());
 
     if (rotation_ != 0.0) {

@@ -124,8 +124,11 @@ protected:							// 3 = Ignores shadows
 	void add_common_svg_attributes(pugi::xml_node& node);
 public:
 	static bool show_bounding_box;
+	static bool svg_y_flipped;
 	static int next_entity_id;
 	static inline void setShowBoundingBox(bool show) { show_bounding_box = show; }
+	static inline void setSvgYFlipped(bool flipped) { svg_y_flipped = flipped; }
+	static inline bool isSvgYFlipped() { return svg_y_flipped; }
 
 	struct Point_ {
 		double x_;

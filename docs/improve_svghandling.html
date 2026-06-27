@@ -1,0 +1,311 @@
+Siirry pääsisältöönKäytettävyysohje
+Jalkapallon MM-kisat 2026: Rangaistuspotkun taito
+Tekoälytila
+Kaikki
+Kuvahaku
+Lyhyet videot
+Videot
+Lisää
+Päivitä
+
+
+
+
+does svg have some special colorcode or ather way I can implement hiding/showing elements as massoperation. That is, I have swg graphical elements and bounding box around them. Can I select some attribute to bounding box drawing that I can(in js) easily show/hide all bounding boxes?
+Yes, you can do this easily in JavaScript. The most scalable way to achieve mass show/hide operations in SVG is by grouping your elements (using <g>) or by assigning a common class name to all bounding box elements. 
+
+W3C
+ +2
+The Best Mass Operations Strategies
+1. Use the CSS Class Name Approach (Recommended)
+Add a common class (e.g., bounding-box) to all your bounding box elements (like <rect> or <path>). You can then toggle their visibility globally using JavaScript. 
+
+Stack Overflow
+html
+<!-- Inside your SVG -->
+<rect class="bounding-box" x="10" y="10" width="100" height="100" stroke="red" fill="none" />
+<circle class="bounding-box" cx="150" cy="50" r="50" stroke="blue" fill="none" />
+
+<!-- JavaScript to hide all -->
+<button onclick="toggleBoundingBoxes(false)">Hide All</button>
+<!-- JavaScript to show all -->
+<button onclick="toggleBoundingBoxes(true)">Show All</button>
+
+<script>
+  function toggleBoundingBoxes(show) {
+    const boxes = document.querySelectorAll('.bounding-box');
+    boxes.forEach(box => {
+      // Use 'none' or 'inline'/'block' to show/hide
+      box.style.display = show ? 'inline' : 'none'; 
+    });
+  }
+</script>
+Käytä koodia harkiten.
+2. Grouping your Elements
+If each graphic element and its bounding box are wrapped in their own <g> tag, you can assign the class or JS behavior to the group rather than the individual lines. 
+
+Stack Overflow
+html
+<g class="graphic-item">
+  <rect class="bounding-box" ... />
+  <path class="my-graphic" ... />
+</g>
+Käytä koodia harkiten.
+3. Using visibility vs display
+You can use SVG's native visibility attribute instead of CSS display. 
+
+MDN Web Docs
+ +1
+style.display = 'none': Completely removes the element from rendering, meaning it won't be clickable and takes zero space.
+style.visibility = 'hidden': The element becomes invisible but still takes up space in the layout. 
+
+W3C Design System
+ +4
+If you want the boxes hidden but you still want the elements to be clickable as a single mass, set the visibility to hidden. 
+
+MDN Web Docs
+ +1
+Would you like to implement this using inline CSS/styles, or do you need the JavaScript integrated with a specific event like a button click or hover action? Let me know, and I can give you the exact code.
+Tekoälyn antamat vastaukset voivat sisältää virheitä. Lue lisää
+
+
+
+
+
+9 sivustoa
+Hide and show items inclusively - W3C Design System
+Hide and show items inclusively * Use the CSS display property display: none; to remove items completely from the DOM. ... * Use t...
+
+W3C Design System
+Styling — SVG 2
+As with HTML, SVG supports the 'class' and 'style' attributes on all elements to support element-specific styling. The 'class' att...
+
+W3C
+visibility - SVG - MDN Web Docs - Mozilla
+This feature is well established and works across many devices and browser versions. It's been available across browsers since Jul...
+
+MDN Web Docs
+Näytä kaikki
+Ok. Does any/all of these allow still "by instance" overdriving? That is, user hides all bounding boxes (thay are hidden by default) but want show selected elements bounding box?
+Yes, you can absolutely override the global setting for specific instances.
+To make this work seamlessly, you must use CSS classes to control the default "all hidden" state instead of setting the style directly on every single box.
+Here are the two best ways to do this.
+Method 1: The Parent Class Trick (Best Practice)
+Instead of hiding every bounding box one by one, you hide them by adding a class to the outer <svg> container. When you want to show a specific box, you just add an .active class directly to that instance. 
+The CSS
+css
+/* By default, hide all bounding boxes if the SVG has the 'hide-boxes' class */
+svg.hide-boxes .bounding-box {
+  display: none;
+}
+
+/* Override: Always show the box if it specifically has the 'show-me' class */
+svg.hide-boxes .bounding-box.show-me {
+  display: inline;
+}
+Käytä koodia harkiten.
+The SVG and HTML
+html
+<svg class="hide-boxes">
+  <!-- This box is hidden by default -->
+  <rect class="bounding-box" x="10" y="10" width="50" height="50" />
+  
+  <!-- This box stays visible because it has the 'show-me' class -->
+  <rect class="bounding-box show-me" x="80" y="10" width="50" height="50" />
+</svg>
+Käytä koodia harkiten.
+The JavaScript
+To toggle all boxes at once: document.querySelector('svg').classList.toggle('hide-boxes');
+To show one specific box: myTargetBox.classList.add('show-me');
+Method 2: The Native visibility Override
+If you prefer using SVG attributes instead of an external CSS file, you can use the visibility attribute. In SVG, a child element can override the hidden status of its parent group.
+The SVG
+html
+<!-- The group hides everything inside it by default -->
+<g id="all-boxes" visibility="hidden">
+  
+  <!-- Hidden instance -->
+  <rect class="bounding-box" x="10" y="10" width="50" height="50" />
+  
+  <!-- Visible instance (overrides the parent group) -->
+  <rect class="bounding-box" x="80" y="10" width="50" height="50" visibility="visible" />
+  
+</g>
+Käytä koodia harkiten.
+The JavaScript
+To show all: document.getElementById('all-boxes').setAttribute('visibility', 'visible');
+To show just one specific box: myTargetBox.setAttribute('visibility', 'visible');
+Would you like to see how to hook this up to a mouse click or hover event so the bounding box appears when a user selects a shape?
+Tekoälyn antamat vastaukset voivat sisältää virheitä. Lue lisää
+
+
+
+
+
+1 sivusto
+Change Page Header on Scroll Using Intersection Observer API: A Dynamic UX Approach
+18.5.2023 — Initially, the box is not visible on the page. However, when the box becomes visible, we add the “active” class to it, which gives...
+
+
+Medium
+Iff remember right, css can also be added as "style" attribute to DOM, so also to svg? Can I use this trick in svg element itself ?
+Yes, you can use the style attribute directly inside the SVG elements. 
+However, you cannot write standard CSS rules (like .my-class { ... }) inside an inline style="..." attribute. Inline styles can only hold individual styling properties for that single element. 
+You can still achieve your goal using the CSS inheritance trick inside the SVG itself by using custom CSS variables. 
+The CSS Variable Trick (Works inside the SVG) 
+You can use a custom CSS variable to control the visibility of all boxes at once. You define the variable on the parent element, and then individual boxes can override it. 
+1. The SVG Setup
+Assign the variable --box-display: none to the parent container. Each bounding box will use this variable for its display style. 
+html
+<!-- The parent group hides all boxes by default using a CSS variable -->
+<g id="all-graphics" style="--box-display: none;">
+
+  <!-- Box 1: Follows the global rule (Hidden) -->
+  <g id="item-1">
+    <circle cx="50" cy="50" r="40" fill="blue" />
+    <rect x="10" y="10" width="80" height="80" stroke="red" fill="none" 
+          style="display: var(--box-display);" />
+  </g>
+
+  <!-- Box 2: Overrides the global rule locally (Visible) -->
+  <g id="item-2">
+    <circle cx="150" cy="50" r="40" fill="green" />
+    <rect x="110" y="10" width="80" height="80" stroke="red" fill="none" 
+          style="display: inline;" /> 
+  </g>
+
+</g>
+Käytä koodia harkiten.
+2. The JavaScript Mass Operations
+To show or hide all bounding boxes instantly, you only need to change the style attribute of the single parent container.
+javascript
+// Show all boxes at once
+document.getElementById('all-graphics').style.setProperty('--box-display', 'inline');
+
+// Hide all boxes at once
+document.getElementById('all-graphics').style.setProperty('--box-display', 'none');
+Käytä koodia harkiten.
+3. The JavaScript Single Instance Operation
+To show a specific box while the rest stay hidden, just change that specific box's inline style directly.
+javascript
+// Show just this one box
+mySpecificRect.style.display = 'inline';
+Käytä koodia harkiten.
+Would you like to see how to wrap this logic into a reusable JavaScript function for your project, or should we look at how pointer events interact with hidden boxes?
+Tekoälyn antamat vastaukset voivat sisältää virheitä. Lue lisää
+
+
+
+
+
+11 sivustoa
+Using SVG with Media Queries — SitePoint - CSS
+15.11.2024 — Using CSS with SVG is a lot like using it with HTML. We can apply CSS using the style attribute of an SVG element, group CSS withi...
+
+
+SitePoint
+developer.mozilla.org
+6.11.2025
+
+MDN Web Docs
+5 Styling
+Some style sheet implementations might allow a wider variety of rules in the 'style' element than in the style attribute that is a...
+
+W3C
+Näytä kaikki
+So, I think that would be preferable because it allows "self containing" svg (Except needed javascript)?
+Yes, this makes the SVG completely self-contained. It requires zero external CSS files. The styles, variables, and structure all live inside the SVG code. 
+Here is the complete, self-contained SVG code. It includes the graphics, the bounding boxes, and the JavaScript logic embedded right inside an SVG <script> tag. 
+Complete Self-Contained SVG Example 
+You can save this code directly as a .svg file, open it in any web browser, and it will work instantly. 
+xml
+<svg xmlns="http://w3.org" viewBox="0 0 400 200" width="100%" height="100%">
+  
+  <!-- Embedded JavaScript for self-containment -->
+  <script type="text/javascript">
+    <![CDATA[
+    // Mass operation: Show or hide all bounding boxes
+    function setAllBoxesVisibility(visible) {
+      const parent = document.getElementById('main-container');
+      parent.style.setProperty('--box-display', visible ? 'inline' : 'none');
+    }
+
+    // Instance operation: Force show one specific box on click
+    function handleItemClick(event) {
+      // Find the bounding box inside the clicked group
+      const currentGroup = event.currentTarget;
+      const box = currentGroup.querySelector('.bounding-box');
+      
+      // Override the global variable for this instance
+      box.style.display = 'inline';
+    }
+    ]]>
+  </script>
+
+  <!-- BACKGROUND FOR TESTING BUTTONS (Optional) -->
+  <rect width="400" height="200" fill="#f0f0f0" />
+
+  <!-- INTERACTIVE BUTTONS INSIDE SVG -->
+  <g transform="translate(10, 20)" cursor="pointer" onclick="setAllBoxesVisibility(true)">
+    <rect width="80" height="30" rx="5" fill="#4CAF50" />
+    <text x="40" y="20" fill="white" font-family="sans-serif" font-size="12" text-anchor="middle">Show All</text>
+  </g>
+
+  <g transform="translate(100, 20)" cursor="pointer" onclick="setAllBoxesVisibility(false)">
+    <rect width="80" height="30" rx="5" fill="#f44336" />
+    <text x="40" y="20" fill="white" font-family="sans-serif" font-size="12" text-anchor="middle">Hide All</text>
+  </g>
+
+  <!-- GRAPHICS CONTAINER -->
+  <!-- We set the default global variable here to 'none' (hidden) -->
+  <g id="main-container" style="--box-display: none;">
+
+    <!-- ITEM 1 -->
+    <g transform="translate(50, 80)" cursor="pointer" onclick="handleItemClick(event)">
+      <circle cx="40" cy="40" r="30" fill="blue" />
+      <!-- Bounding Box uses the global variable -->
+      <rect class="bounding-box" width="80" height="80" stroke="red" stroke-width="2" fill="none" 
+            style="display: var(--box-display);" />
+    </g>
+
+    <!-- ITEM 2 -->
+    <g transform="translate(200, 80)" cursor="pointer" onclick="handleItemClick(event)">
+      <polygon points="40,10 70,70 10,70" fill="green" />
+      <!-- Bounding Box uses the global variable -->
+      <rect class="bounding-box" width="80" height="80" stroke="red" stroke-width="2" fill="none" 
+            style="display: var(--box-display);" />
+    </g>
+
+  </g>
+</svg>
+Käytä koodia harkiten.
+Why This Works Perfectly For Your Needs
+No External Dependencies: You can drop this SVG into an <iframe> or an <object> tag on any website, and it will retain its functionality.
+Easy Reset: Clicking the "Hide All" button immediately resets everything, clearing out any individual overrides because the parent variable changes back to none. 
+Do you need help modifying this code to work with mouse hover (mouseover/mouseout) effects instead of clicks, or should we look at how to trigger these functions from JavaScript running outside the SVG file?
+Tekoälyn antamat vastaukset voivat sisältää virheitä. Lue lisää
+
+
+
+
+
+12 sivustoa
+Why We're Breaking Up with CSS-in-JS : r/javascript
+16.10.2022 — CSS variables, while not CSS module specific, is probably the best solution. It will definitely be faster than any JS solution and...
+
+
+Reddit
+Hidden in plain sight: How threat actors abuse SVGs for phishing
+19.8.2025 — The self-contained HTML page inside the SVG file also comes with its JavaScript logic to exfiltrate the entered credentials afterw...
+
+
+VMRay
+SVG Support — MathJax 4.0 documentation
+One advantage to the SVG output is that it is relatively self-contained (it does not rely heavily on CSS, though it does use some ...
+
+MathJax
+Näytä kaikki
+Kysy mitä tahansa
+
+
+Tekoälytilan vastaus on valmis
