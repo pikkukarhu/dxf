@@ -123,10 +123,10 @@ void MText::to_svg(pugi::xml_node& svg_node) {
     
     add_common_svg_attributes(text);
     
-    if (rotation_ != 0.0) {
-        string transform = "rotate(" + std::to_string(-rotation_) + " " + std::to_string(insertion_point_.x_) + " " + std::to_string(insertion_point_.y_) + ")";
+    //if (rotation_ != 0.0) {
+        string transform = " scale(1, -1) rotate(" + std::to_string(-rotation_) + " " + std::to_string(insertion_point_.x_) + " " + std::to_string(insertion_point_.y_) + ")";
         text.append_attribute("transform").set_value(transform.c_str());
-    }
+    //}
 
     // MText can have multiple lines separated by \P or other markers
     // For now, we just put the raw string
