@@ -99,22 +99,7 @@ void Text::write_to_json_writer(rapidjson::Writer<rapidjson::StringBuffer>& writ
 }
 
 void Text::to_svg(pugi::xml_node& svg_node) {
-    pugi::xml_node text = svg_node.append_child("text");
-    text.append_attribute("x").set_value(insertion_point_.x_);
-    text.append_attribute("y").set_value(-insertion_point_.y_);
-    text.append_attribute("font-size").set_value(height_);
-    text.append_attribute("font-family").set_value(resolved_font_family_.c_str());
-    text.append_attribute("dominant-baseline").set_value("central");
-    
-    add_common_svg_attributes(text);
-
-    text.append_child(pugi::node_pcdata).set_value(value_.c_str());
-    
-    //if (rotation_ != 0.0) {
-        string transform = " scale(1, -1) rotate(" + std::to_string(-rotation_) + " " + std::to_string(insertion_point_.x_) + " " + std::to_string(insertion_point_.y_) + ")";
-        text.append_attribute("transform").set_value(transform.c_str());
-    //}
-
+    TextBase::to_svg(svg_node);
     draw_bounding_box(svg_node);
 }
 

@@ -162,7 +162,7 @@ void TextBase::to_svg(pugi::xml_node& svg_node) {
         string pathSvg = convertLffGlyphToSvgPath(glyphLines, originX, originY, scale);
         pugi::xml_document doc;
         doc.load_string(pathSvg.c_str());
-        svg_node.append_copy(doc.first_child());
+        textGroup.append_copy(doc.first_child());
     }
 }
 
